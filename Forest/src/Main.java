@@ -1,12 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Pääluokka
  */
 
-/**
- *
- * @author Ronsupihvi
- */
+// Puiden vertailu ja käyttöliittymä tänne
 public class Main {
+    
+    public static void main(String[] args) {
+        
+    }
     
 }
