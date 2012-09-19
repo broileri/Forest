@@ -2,48 +2,42 @@
  * Binäärihakupuu
  */
 
-public class Binary_Search {
+public class Binary_Search extends Walks {
 
-    private Node root;
-    private int max;
+    private Node root;    
 
     // Konstruktori, puuhun tehdään tyhjä juuri
     public Binary_Search() {
         this.root = null;
     }
+    
+    public Node getRoot() {
+        return this.root;
+    }
 
     public void insert(int key) {
 
-        // Jos tyhjä puu, luodaan juurisolmu ja asetetaan max alkutilaansa
+        // Jos tyhjä puu, luodaan juurisolmu
         if (this.root == null) {
             this.root = new Node(key);
-            max = key;
-        } 
+        }  
         
-        else {
-
-            // Max-arvon tarkastus
-            if (key > this.max) {
-                max = key;
-            }
-
+        else {            
             // Käsittelyssä oleva solmu
-            Node currentNode = this.root;
-
+            Node current = this.root;
 
             while (true) {
-
                 // Lisättävä pienempi tai yhtä suuri --> vasemmalle
-                if (key <= currentNode.getKey()) {
+                if (key <= current.getKey()) {
 
                     // Jos vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                    if (currentNode.getLeft() != null) {
-                        currentNode = currentNode.getLeft();
+                    if (current.getLeft() != null) {
+                        current = current.getLeft();
                     } 
                     // Jos vasen lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle 
                     else {
-                        currentNode.setLeft(new Node(key));
-                        currentNode.getLeft().setParent(currentNode);
+                        current.setLeft(new Node(key));
+                        current.getLeft().setParent(current);
                         return;
                     }
                 } 
@@ -51,13 +45,13 @@ public class Binary_Search {
                 else {
 
                     // Jos oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                    if (currentNode.getRight() != null) {
-                        currentNode = currentNode.getRight();
+                    if (current.getRight() != null) {
+                        current = current.getRight();
                     } 
                     // Jos oikea lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle
                     else {
-                        currentNode.setRight(new Node(key));
-                        currentNode.getRight().setParent(currentNode);
+                        current.setRight(new Node(key));
+                        current.getRight().setParent(current);
                         return;
                     }
                 }
@@ -73,68 +67,62 @@ public class Binary_Search {
         }
 
         // Käsittelyssä oleva solmu
-        Node currentNode = this.root;
+        Node current = this.root;
 
         while (true) {
 
             // Löytyi!
-            if (key == currentNode.getKey()) {
+            if (key == current.getKey()) {
                 return true;
             }
 
             // Etsittävä pienempi --> vasemmalle
-            if (key < currentNode.getKey()) {
+            if (key < current.getKey()) {
 
                 // Jos vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                if (currentNode.getLeft() != null) {
-                    currentNode = currentNode.getLeft();
+                if (current.getLeft() != null) {
+                    current = current.getLeft();
                 } // Jos vasen lapsi on tyhjä, etsittävää arvoa ei löytynyt 
                 else {
-                    currentNode.setLeft(new Node(key));
+                    current.setLeft(new Node(key));
                     return false;
                 }
             } // Etsittävä suurempi --> oikealle
             else {
 
                 // Jos oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                if (currentNode.getRight() != null) {
-                    currentNode = currentNode.getRight();
+                if (current.getRight() != null) {
+                    current = current.getRight();
                 } // Jos oikea lapsi on tyhjä, etsittävää arvoa ei löytynyt 
                 else {
-                    currentNode.setRight(new Node(key));
+                    current.setRight(new Node(key));
                     return false;
                 }
             }
         }
-    }
-        
+    }        
     
     public void delete(int key) {
         
-        // Käsittelyssä oleva solmu
-        Node currentNode = this.root;
+        Node current = this.root;
         
         while (true) {
             
             // Poistettava löytyi - poistetaan
-            if (currentNode.getKey() == key) {
+            if (current.getKey() == key) {
                 
-                currentNode.getParent().setLeft(currentNode.getLeft());
-                currentNode.getParent().setRight(currentNode.getRight());
-                currentNode.getLeft().setParent(currentNode.getParent());
-                currentNode.getRight().setParent(currentNode.getParent());
-                
-                if (currentNode.getKey() == max) {
-                    max = currentNode.getParent().getKey();
-                }
+                current.getParent().setLeft(current.getLeft());
+                current.getParent().setRight(current.getRight());
+                current.getLeft().setParent(current.getParent());
+                current.getRight().setParent(current.getParent());                                
                 return;
             }
             
             // Siirrytään vasemmalle
-            else if (key < currentNode.getKey()) {
+            else if (key < current.getKey()) {
                 
-                if (currentNode.getLeft() != null) {
-                    currentNode = currentNode.getLeft();
+                if (current.getLeft() != null) {
+                    current = current.getLeft();
                 }
                 else {
                     return;
@@ -144,8 +132,8 @@ public class Binary_Search {
             // Siirrytään oikealle
             else {
                 
-                if (currentNode.getRight() != null) {
-                    currentNode = currentNode.getRight();
+                if (current.getRight() != null) {
+                    current = current.getRight();
                 }
                 else {
                     return;
@@ -155,10 +143,23 @@ public class Binary_Search {
     }
 
     public int getMin() {
-        return root.getKey();
+        
+        Node current = this.root;
+         
+         while (current.getLeft() != null) {
+             current = current.getLeft();
+         }
+        return current.getKey();
     }
     
     public int getMax() {
-        return this.max;
+        
+         Node current = this.root;
+         
+         while (current.getRight() != null) {
+             current = current.getRight();
+         }
+                 
+        return current.getKey();
     }
 }
