@@ -4,7 +4,7 @@
 public class Node {
 
     private Node parent, left, right;
-    private int key;
+    private int key, height;
   
 
     public Node(int key) {
@@ -12,6 +12,7 @@ public class Node {
         this.parent = null;        
         this.left = null;
         this.right = null;
+        this.height = -1;
     }
     
     public Node getParent() {
@@ -41,4 +42,17 @@ public class Node {
     public int getKey() {
         return this.key;
     }
+    
+    public void setKey(int key) {
+        this.key = key;
+    }
+    
+    public int getHeight() {
+        return this.height;
+    }
+    
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
 }
