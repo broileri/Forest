@@ -1,12 +1,16 @@
-/*
+
+import trees.AVL;
+import trees.Binary_Search;
+
+/**
  * Pääluokka, jossa jotain testailua näin alkuun. :P
+ * 
+ * @author Broileri
  */
-
-
 public class Main {
     
     public static void main(String[] args) {
-      /*  
+        
         Binary_Search b = new Binary_Search();
         b.insert(8);
         b.insert(3);
@@ -29,7 +33,7 @@ public class Main {
          */
         
                       
-        /*
+        
         b.printInOrder(b.getRoot());      // 1 2 3 4 8 9 10 11 12 toimii  
         System.out.println("");
         b.printPostOrder(b.getRoot());    // 1 2 4 3 9 11 10 12 8 toimii
@@ -54,8 +58,7 @@ public class Main {
        
         System.out.println("PUU VAIHTUUUUU");
         
-        * 
-        */
+        
         
         AVL a = new AVL();
         a.AVLinsert(3);
@@ -99,7 +102,7 @@ public class Main {
         
         // Poisto:
         a.AVLdelete(22);
-        a.AVLdelete(7);        
+        a.AVLdelete(2);
         
         // Ei enää löydy:
         System.out.println(a.search(7)); // false toimii
@@ -108,6 +111,9 @@ public class Main {
         System.out.println("");
         a.printLevelOrder(a.getRoot()); // 4 2 14 1 3 6 15 5 16 toimii
         System.out.println("");
+        
+        System.out.println("");
+        System.out.println(a.search(123)); // false toimii
         
     }
     

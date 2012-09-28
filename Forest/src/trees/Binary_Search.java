@@ -1,20 +1,42 @@
-/*
- * Binäärihakupuu
- */
+package trees;
 
+import data_structures.Node;
+import data_structures.Walks;
+
+/**
+ * Binäärihakupuu
+ * 
+ * @author Broileri
+ */
 public class Binary_Search extends Walks {
 
     private Node root;
 
-    // Konstruktori, puuhun tehdään tyhjä juuri
+    /**
+     * Konstruktori asettaa puun juureksi null-arvon.
+     */
     public Binary_Search() {
         this.root = null;
     }
 
+    /**
+     * Palauttaa puun juurisolmun.
+     * 
+     * @see data_structures.Node
+     * 
+     * @return Puun juurisolmu.
+     */
     public Node getRoot() {
         return this.root;
     }
 
+    /**
+     * insert lisää puuhun solmun, jolla on parametrina annettu avain.
+     * 
+     * @see data_structures.Node
+     * 
+     * @param key Puuhun lisättävä avain.
+     */
     public void insert(int key) {
 
         // Jos tyhjä puu, luodaan juurisolmu
@@ -54,65 +76,40 @@ public class Binary_Search extends Walks {
         }
     }
 
-    public Node nodeSearch(int key) {
+  /**
+     * Tutkii, löytyykö parametrina annetusta puusta parametrina annettua avainta.
+     * 
+     * @see data_structures.Node
+     * 
+     * @param x Puu, josta avainta etsitään.
+     * @param key Avain, jota etsitään.
+     * 
+     * @return Solmu, jolla on etsittävä avain tai null.
+     */
+    private Node nodeSearch(Node x, int key) {
 
-        // Tyhjä puu
-        if (this.root == null) {
-            return null;
+        if (x == null || x.getKey() == key) {
+            return x;
         }
-
-        // Käsittelyssä oleva solmu
-        Node current = this.root;
-
-        while (true) {
-
-            // Löytyi!
-            if (key == current.getKey()) {
-                return current;
-            }
-
-            // Etsittävä pienempi --> vasemmalle
-            if (key < current.getKey()) {
-
-                // Jos vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                if (current.getLeft() != null) {
-                    current = current.getLeft();
-                } // Jos vasen lapsi on tyhjä, etsittävää arvoa ei löytynyt 
-                else {
-                    current.setLeft(new Node(key));
-                    return null;
-                }
-            } // Etsittävä suurempi --> oikealle
-            else {
-
-                // Jos oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                if (current.getRight() != null) {
-                    current = current.getRight();
-                } // Jos oikea lapsi on tyhjä, etsittävää arvoa ei löytynyt 
-                else {
-                    current.setRight(new Node(key));
-                    return null;
-                }
-            }
+        if (key < x.getKey()) {
+            return nodeSearch(x.getLeft(), key);
+        } else {
+            return nodeSearch(x.getRight(), key);
         }
     }
 
-    public boolean search(int key) {
-
-        Node found = nodeSearch(key);
-        if (found == null) {
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * delete poistaa puusta solmun, jolla on parametrina annettu avain. Jos
+     * puussa ei ole poistettavaa solmua, metodi ei tee mitään.
+     * 
+     * @param key Poistettavan solmun avain.
+     */
     public void delete(int key) {
-
-        Node deleted = nodeSearch(key);
-
+        
         // Onko poistettavaa puussa
-        if (deleted != null) {
-            Node parent, child;
+        Node deleted = nodeSearch(this.getRoot(), key),
+                parent, child, next;        
+        if (deleted != null) {                       
             // Jos poistettavalla ei ole lapsia...
             if (deleted.getLeft() == null && deleted.getRight() == null) {
                 parent = deleted.getParent();
@@ -149,7 +146,7 @@ public class Binary_Search extends Walks {
                 }
             } // Jos poistettavalla on kaksi lasta...
             else {
-                Node next = getMin(deleted.getRight());
+                next = getMin(deleted.getRight());
                 deleted.setKey(next.getKey());
                 child = next.getRight();
                 parent = next.getParent();
@@ -163,9 +160,38 @@ public class Binary_Search extends Walks {
                 }
             }
         }
+    }    
+
+
+    /**
+     * Tutkii NodeSearch-metodin avulla, löytyykö puusta parametrina
+     * annettu arvo.
+     * 
+     * @see trees.AVL#nodeSearch(data_structures.Node, int) 
+     * 
+     * @param key Avain, jota etsitään.
+     * 
+     * @return Tieto siitä, onko avain puussa vai ei.
+     */
+    public boolean search(int key) {
+
+        Node found = nodeSearch(this.getRoot(), key);
+        if (found == null) {
+            return false;
+        }
+        return true;
     }
 
-    public Node getMin(Node x) {
+    /**
+     * Etsii annetusta (ali)puusta solmun, jolla on pienin avain.
+     *
+     * @see data_structures.Node
+     *
+     * @param x Puu, jonka pienintä solmua etsitään.
+     *
+     * @return Pieniavaimisin x:n alipuun solmu.
+     */
+    private Node getMin(Node x) {
 
         while (x.getLeft() != null) {
             x = x.getLeft();
@@ -173,7 +199,16 @@ public class Binary_Search extends Walks {
         return x;
     }
 
-    public Node getMax(Node x) {
+    /**
+     * Etsii annetusta (ali)puusta solmun, jolla on suurin avain.
+     *
+     * @see data_structures.Node
+     *
+     * @param x Puu, jonka suurinta solmua etsitään.
+     *
+     * @return Suuriavaimisin x:n alipuun solmu.
+     */
+    private Node getMax(Node x) {
 
         while (x.getRight() != null) {
             x = x.getRight();
@@ -181,11 +216,26 @@ public class Binary_Search extends Walks {
         return x;
     }
 
+    /**
+     * Etsii puusta suurimman avaimen getMax-metodin avulla.
+     *
+     * @see trees.AVL#getMax(data_structures.Node)
+     *
+     * @return Puun suurin avain.
+     */
     public int getMaxKey() {
         return getMax(this.root).getKey();
     }
 
+    /**
+     * Etsii puusta pienimmän avaimen getMin-metodin avulla.
+     *
+     * @see trees.AVL#getMin(data_structures.Node)
+     *
+     * @return Puun pienin avain.
+     */
     public int getMinKey() {
         return getMin(this.root).getKey();
     }
+
 }

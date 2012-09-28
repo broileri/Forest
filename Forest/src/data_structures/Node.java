@@ -1,12 +1,21 @@
-/*
- * Solmuluokka
+package data_structures;
+
+/**
+ * Solmuluokka puita varten.
+ * 
+ * @author Broileri
  */
 public class Node {
 
     private Node parent, left, right;
-    private int key, height;
-  
+    private int key, height;  
 
+    /**
+     * Jokaisella solmulla on korkeus, avainarvo sekä
+     * viiteet solmun vanhempaan ja molempiin lapsiin.
+     * 
+     * @param key Solmulle annettava avainarvo.
+     */
     public Node(int key) {
         this.key = key;        
         this.parent = null;        
