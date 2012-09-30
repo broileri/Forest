@@ -115,6 +115,24 @@ public class Main {
         System.out.println("");
         System.out.println(a.search(123)); // false toimii
         
+        System.out.println("PUU VAIHTUU TAAS, BEHOLD!");
+        AVL lol = new AVL();
+        lol.AVLinsert(1);
+        lol.AVLinsert(21);
+        lol.AVLinsert(14);
+        lol.AVLinsert(15);
+        lol.AVLinsert(12);
+        lol.AVLinsert(16);
+        lol.AVLinsert(19);
+        lol.AVLinsert(18);
+        lol.AVLinsert(41);
+        lol.AVLinsert(13);
+        lol.AVLinsert(10);
+        lol.AVLinsert(17);
+        lol.printInOrder(lol.getRoot());
+        System.out.println("");
+        lol.printLevelOrder(lol.getRoot());
+        
     }
     
 }

@@ -78,6 +78,7 @@ public class Binary_Search extends Walks {
 
   /**
      * Tutkii, löytyykö parametrina annetusta puusta parametrina annettua avainta.
+     * Jos löytyy, metodi palauttaa solmun, jolla on parametrina annettu avain.
      * 
      * @see data_structures.Node
      * 
