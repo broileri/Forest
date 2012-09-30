@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import data_structures.Node;
 import org.junit.*;
@@ -70,7 +66,7 @@ public class BinaryTest {
         Node root, nullNode;
         int a, b, c, d, e, f;
         root = bintree.getRoot();
-        a = root.getRight().getRight().getRight().getLeft().getRight().getKey(); // g:n pitäisi nyt olla 234
+        a = root.getRight().getRight().getRight().getLeft().getRight().getKey(); // a:n pitäisi nyt olla 234
         b = root.getKey(); // b:n pitäisi nyt olla 10
         c = root.getLeft().getLeft().getRight().getKey(); // c:n pitäisi nyt olla 3
         d = root.getRight().getLeft().getLeft().getRight().getKey(); // d:n pitäisi nyt olla 13

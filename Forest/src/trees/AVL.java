@@ -77,11 +77,13 @@ public class AVL extends Walks {
     }
 
     /**
-     * AVLinsertin yhteydessä käytettävä metodi, joka päivittää p:n vanhemman
+     * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää p:n vanhemman
      * lapsen ja korkeuden sen jälkeen, kun p:ssä ollut epätasapaino on
      * korjattu.
      *
      * @see trees.AVL#AVLinsert(int key)
+     * @see trees.AVL#balanceLeftsGrandchild(data_structures.Node) 
+     * @see trees.AVL#balanceRightsGrandchild(data_structures.Node) 
      * @see data_structures.Node
      * @param parent p:n vanhempi.
      * @param subtree Alipuu, joka on syntynyt puun kierroista ja joka nyt
@@ -213,7 +215,8 @@ public class AVL extends Walks {
      * lapsen lapsi.
      *
      * @see trees.AVL#fixParent(data_structures.Node, data_structures.Node, data_structures.Node) 
-     * 
+     * @see trees.AVL#AVLdelete(int) 
+     * @see trees.AVL#AVLinsert(int)      * 
      * @param p Käsiteltävä solmu.
      */
     private void balanceLeftsGrandchild(Node p) {

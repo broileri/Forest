@@ -133,6 +133,32 @@ public class Main {
         System.out.println("");
         lol.printLevelOrder(lol.getRoot());
         
+        
+        
+        Binary_Search bintree = new Binary_Search();
+        bintree = new Binary_Search();
+        bintree.insert(10);
+        bintree.insert(4);         // bintree-puun pitäisi näyttää lisäysten jälkeen tältä:        
+        bintree.insert(2);         //             10       
+        bintree.insert(3);         //            /   \
+        bintree.insert(16);        //           4     16
+        bintree.insert(14);        //          /     /   \
+        bintree.insert(18);        //         2     14    18
+        bintree.insert(11);        //        / \    / \   /  \
+        bintree.insert(15);        //       -4  3  11 15  17 1002
+        bintree.insert(1002);      //                \       /
+        bintree.insert(13);        //                 13    22
+        bintree.insert(22);        //                         \
+        bintree.insert(234);       //                          234
+        bintree.insert(-4);        //                            \
+        bintree.insert(17);        //                           1000 
+        bintree.insert(1000);
+        System.out.println("");
+        bintree.printInOrder(bintree.getRoot());
+        System.out.println("");
+        bintree.printPreOrder(bintree.getRoot());
+        System.out.println("");
+        bintree.printPostOrder(bintree.getRoot());
     }
     
 }
