@@ -1,6 +1,7 @@
 
 import trees.AVL;
 import trees.Binary_Search;
+import trees.Splay;
 
 /**
  * Pääluokka, jossa jotain testailua näin alkuun. :P
@@ -10,7 +11,8 @@ import trees.Binary_Search;
 public class Main {
     
     public static void main(String[] args) {
-        
+
+/*        
         Binary_Search b = new Binary_Search();
         b.insert(8);
         b.insert(3);
@@ -21,19 +23,22 @@ public class Main {
         b.insert(10);
         b.insert(11);
         b.insert(9);
+    
+    * 
+    */
+    
         
-        /*
-         *                  8
-         *                /   \
-         *             3         12
-         *           /  \        /
-         *         2      4     10
-         *        /            /  \
-         *       1            9    11
-         */
+        //                   8
+        //                 /   \
+        //              3         12
+        //            /  \        /
+        //          2      4     10
+        //         /            /  \
+        //        1            9    11
+         
         
                       
-        
+    /*    
         b.printInOrder(b.getRoot());      // 1 2 3 4 8 9 10 11 12 toimii  
         System.out.println("");
         b.printPostOrder(b.getRoot());    // 1 2 4 3 9 11 10 12 8 toimii
@@ -72,16 +77,19 @@ public class Main {
         a.AVLinsert(15);
         a.AVLinsert(14);
         
+        * 
+        */
+        //
+        //            4
+        //           / \
+        //         2     7
+        //        /\     /\
+        //       1  3   6  15
+        //             /   / \
+        //            5   14  16
+        //
+       
         /*
-         *            4
-         *           / \
-         *         2     7
-         *        /\     /\
-         *       1  3   6  15
-         *             /   / \
-         *            5   14  16
-         */
-        
         a.printPreOrder(a.getRoot()); // 4 2 1 3 7 6 5 15 14 16 toimii
         System.out.println("");
         a.printLevelOrder(a.getRoot()); // 4 2 7 1 3 6 15 5 14 16 toimii
@@ -159,6 +167,107 @@ public class Main {
         bintree.printPreOrder(bintree.getRoot());
         System.out.println("");
         bintree.printPostOrder(bintree.getRoot());
-    }
     
+    
+    * 
+    */
+        Splay s = new Splay();
+        s.splayInsert(18);
+        s.splayInsert(5);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        s.splayInsert(6);
+        s.printLevelOrder(s.getRoot());        
+        System.out.println("");
+        s.splayInsert(20);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");        
+        s.splayInsert(33);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");        
+        s.splayInsert(1);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");  
+        s.splayInsert(9);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        s.splayInsert(30);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");        
+        s.splayInsert(7);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");       
+        s.splayInsert(8);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        s.splayInsert(4);
+        s.printLevelOrder(s.getRoot());
+        
+        // Inserttien jälkeen
+        //
+        //              4
+        //            /   \
+        //           1     8
+        //                / \
+        //               6   9
+        //              / \   \
+        //             5   7   30
+        //                     / \
+        //                    18  33
+        //                     \
+        //                      20
+        //
+        
+        /*System.out.println("\nHAKUJA");
+        
+        System.out.println(s.search(4));
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        System.out.println(s.search(33));
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        System.out.println(s.search(6));
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        System.out.println(s.getMaxKey());
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        * 
+        */
+        // searchissa ei toimi tapaus, jossa etsitään puussa ei-olevaa keytä
+        // omg, delete toimii ehkä
+        // getMax ja getMin taitavat toimia
+        // insert toimii kai hyvin :)))
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        s.splayDelete(4);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.splayDelete(20);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.splayDelete(6);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.splayDelete(33);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+       
+        
+        s.splayDelete(11);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+       
+        
+    }
+
 }
