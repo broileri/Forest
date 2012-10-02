@@ -218,7 +218,7 @@ public class Main {
         //                      20
         //
         
-        /*System.out.println("\nHAKUJA");
+        System.out.println("\nHAKUJA");
         
         System.out.println(s.search(4));
         s.printLevelOrder(s.getRoot());
@@ -236,12 +236,17 @@ public class Main {
         s.printLevelOrder(s.getRoot());
         System.out.println("");
         
-        * 
-        */
-        // searchissa ei toimi tapaus, jossa etsitään puussa ei-olevaa keytä
-        // omg, delete toimii ehkä
+        System.out.println(s.search(-5));
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        
+        // search taitaa toimia
+        // delete taitaa toimia
         // getMax ja getMin taitavat toimia
         // insert toimii kai hyvin :)))
+        
+        /*
         
         System.out.println("");
         System.out.println("");
@@ -268,6 +273,7 @@ public class Main {
         System.out.println("");
        
         
+        */
     }
 
 }

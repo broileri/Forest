@@ -22,14 +22,23 @@ public class Splay extends Walks {
     /**
      * Palauttaa puun juurisolmun.
      *
-     * @see data_structures.Node
-     *
+     * @see data_structures.Node     
      * @return Puun juurisolmu.
      */
     public Node getRoot() {
         return this.root;
     }
 
+    /**
+     * Lisää puuhun insertin avulla solmun, jolla on parametrina annettu
+     * avain ja sen jälkeen splayaa uuden solmun juureksi. Jos puussa on jo
+     * solmu, jolla on parametrina annettu avain, lisäystä ei tehdä, mutta
+     * solmu splayataan kuitenkin juureksi.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#insert(int) 
+     * @param key Puuhun lisättävän solmun avain.
+     */
     public void splayInsert(int key) {
 
         Node current = insert(key);
@@ -120,6 +129,20 @@ public class Splay extends Walks {
         return null;
     }
 
+    /**
+     * Metodi poistaa apumetodinsa deleteRootin avulla 
+     * puusta solmun, jolla on parametrina annettu avain.
+     * Solmu splayataan ensin juureksi, minkä jälkeen se poistetaan
+     * ja juuren oikean alipuun pienin arvo splayataan uudeksi juureksi.
+     * Jos puussa ei ole sellaista solmua, johon parametri key viittaa,
+     * splayataan juureen kuitenkin se solmu, joka olisi ollut splayDeleten
+     * kohteen vanhempi.
+     * 
+     * @see trees.Splay#deleteRoot() 
+     * @see trees.Splay#splay(data_structures.Node) 
+     * @see data_structures.Node
+     * @param key Poistettavan solmun avain.
+     */
     public void splayDelete(int key) {
 
         if (this.root != null) {
@@ -132,6 +155,14 @@ public class Splay extends Walks {
         }
     }
 
+    /**
+     * splayDeleten käyttämä apumetodi, joka hoitaa varsinaisen
+     * juuren splayatun alkion poistamisen.
+     * 
+     * @see trees.Splay#deleteRoot() 
+     * @see trees.Splay#splay(data_structures.Node) 
+     * @see data_structures.Node
+     */
     private void deleteRoot() {
 
         Node deleted = this.getRoot(), newRoot;
@@ -173,13 +204,12 @@ public class Splay extends Walks {
     }
 
     /**
-     * Tutkii NodeSearch-metodin avulla, löytyykö puusta parametrina annettu
-     * arvo.
+     * Tutkii NodeSearch-metodin avulla, löytyykö puusta solmu, jolla on
+     * parametrina annettu key. Jos löytyy, ko. solmu splayataan puun juureksi.
      *
-     * @see trees.AVL#nodeSearch(data_structures.Node, int)
-     *
-     * @param key Avain, jota etsitään.
-     *
+     * @see trees.Splay#nodeSearch(data_structures.Node, int)
+     * @see data_structures.Node   
+     * @param key Avain, jota etsitään.   
      * @return Tieto siitä, onko avain puussa vai ei.
      */
     public boolean search(int key) {
@@ -197,10 +227,8 @@ public class Splay extends Walks {
     /**
      * Etsii annetusta (ali)puusta solmun, jolla on pienin avain.
      *
-     * @see data_structures.Node
-     *
+     * @see data_structures.Node    
      * @param x Puu, jonka pienintä solmua etsitään.
-     *
      * @return Pieniavaimisin x:n alipuun solmu.
      */
     private Node getMin(Node x) {
@@ -214,10 +242,8 @@ public class Splay extends Walks {
     /**
      * Etsii annetusta (ali)puusta solmun, jolla on suurin avain.
      *
-     * @see data_structures.Node
-     *
-     * @param x Puu, jonka suurinta solmua etsitään.
-     *
+     * @see data_structures.Node   
+     * @param x Puu, jonka suurinta solmua etsitään.   
      * @return Suuriavaimisin x:n alipuun solmu.
      */
     private Node getMax(Node x) {
@@ -229,10 +255,11 @@ public class Splay extends Walks {
     }
 
     /**
-     * Etsii puusta suurimman avaimen getMax-metodin avulla.
+     * Etsii puusta suurimman avaimen getMax-metodin avulla, minkä jälkeen
+     * splayaa sen solmun puun juureksi, jolla suurin avain on.
      *
-     * @see trees.AVL#getMax(data_structures.Node)
-     *
+     * @see trees.Splay#getMax(data_structures.Node) 
+     * @see trees.Splay#getMax(data_structures.Node) 
      * @return Puun suurin avain.
      */
     public int getMaxKey() {
@@ -242,10 +269,11 @@ public class Splay extends Walks {
     }
 
     /**
-     * Etsii puusta pienimmän avaimen getMin-metodin avulla.
+     * Etsii puusta pienimmän avaimen getMin-metodin avulla, minkä jälkeen
+     * splayaa sen solmun puun juureksi, jolla pienin avain on.
      *
-     * @see trees.AVL#getMin(data_structures.Node)
-     *
+     * @see trees.Splay#getMin(data_structures.Node)   
+     * @see trees.Splay#getMin(data_structures.Node)
      * @return Puun pienin avain.
      */
     public int getMinKey() {
@@ -272,7 +300,7 @@ public class Splay extends Walks {
         if (x.getLeft() != null) {
             x.getLeft().setParent(x);
         }
-        return y; // y
+        return y;
     }
 
     /**
@@ -296,7 +324,14 @@ public class Splay extends Walks {
         return y;
     }
 
-    // TÄMÄ JA INSERT TOIMIVAT! \o/ (luultavasti)
+    /**
+     * Metodi vaihtaa parametrina annetun solmun puun juureksi left- ja 
+     * right-kiertojen avulla.
+     * 
+     * @see trees.Splay#rotateLeft(data_structures.Node) 
+     * @see trees.Splay#rotateRight(data_structures.Node) 
+     * @param x 
+     */
     public void splay(Node x) {
 
         Node p, gp, current;
@@ -340,6 +375,15 @@ public class Splay extends Walks {
         }
     }
 
+    /**
+     * splayn käyttämä apumetodi, joka korjaa äskettäin
+     * käytetyn rotaten palauttaman solmun vanhemman oikeanlaiseksi.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#rotateLeft(data_structures.Node) 
+     * @see trees.Splay#rotateRight(data_structures.Node) 
+     * @param x rotaten palauttama solmu.
+     */
     private void fixParent(Node x) {
 
         Node parent = x.getParent();
