@@ -56,8 +56,7 @@ public class Trie {
             return false;
         }
         return true;
-    }
-  
+    }  
     
     
     private TrieNode[] search(int key) {

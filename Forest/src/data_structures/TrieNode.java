@@ -38,38 +38,5 @@ public class TrieNode {
     
     public TrieNode[] getList() {
         return this.nodes;
-    }
-    
-    public TrieNode getParent() {
-        return this.parent;
-    }
-   
-    public TrieNode getLeft() {
-        return this.left;
-    }
-    
-    public  TrieNode getRight() {
-        return this.right;
-    }    
-
-    public void setLeft(TrieNode left) {
-        this.left = left;
-    }
-
-    public void setRight(TrieNode right) {
-        this.right = right;
-    }
-    
-    public void setParent(TrieNode parent) {
-        this.parent = parent;
-    } 
-
-    public int getKey() {
-        return this.key;
-    }
-    
-    public void setKey(int key) {
-        this.key = key;
-    }
-
+    }   
 }
