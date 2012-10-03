@@ -2,6 +2,7 @@
 import trees.AVL;
 import trees.Binary_Search;
 import trees.Splay;
+import trees.Trie;
 
 /**
  * Pääluokka, jossa jotain testailua näin alkuun. :P
@@ -171,6 +172,7 @@ public class Main {
     
     * 
     */
+        /*
         Splay s = new Splay();
         s.splayInsert(18);
         s.splayInsert(5);
@@ -217,7 +219,7 @@ public class Main {
         //                     \
         //                      20
         //
-        
+       /* 
         System.out.println("\nHAKUJA");
         
         System.out.println(s.search(4));
@@ -245,6 +247,7 @@ public class Main {
         // delete taitaa toimia
         // getMax ja getMin taitavat toimia
         // insert toimii kai hyvin :)))
+        // to do: splay-testi, trie?, käyttis, dokkarit
         
         /*
         
@@ -274,6 +277,64 @@ public class Main {
        
         
         */
+        
+        // oho, toimii
+        Trie c = new Trie();
+        c.insert(8);
+        c.insert(-38);
+        c.insert(834);
+        c.insert(12);
+        c.insert(3389);
+        
+        // nämäkin
+        System.out.println(c.trieSearch(8));
+        System.out.println(c.trieSearch(-38));
+        System.out.println(c.trieSearch(11));
+        System.out.println(c.trieSearch(12));
+        System.out.println(c.trieSearch(3389));
+        
+        
+        // poistotkin taitavat olla jees ^^
+        System.out.println("POISTOT!");
+        
+        c.delete(11);
+        System.out.println(c.trieSearch(8));
+        System.out.println(c.trieSearch(-38));
+        System.out.println(c.trieSearch(11));
+        System.out.println(c.trieSearch(12));
+        System.out.println(c.trieSearch(3389));
+        
+        System.out.println("POISTOT!");
+        
+        c.delete(8);
+        System.out.println(c.trieSearch(8));
+        System.out.println(c.trieSearch(-38));
+        System.out.println(c.trieSearch(11));
+        System.out.println(c.trieSearch(12));
+        System.out.println(c.trieSearch(3389));
+        
+        System.out.println("POISTOT!");
+        
+        c.delete(-38);
+        System.out.println(c.trieSearch(8));
+        System.out.println(c.trieSearch(-38));
+        System.out.println(c.trieSearch(11));
+        System.out.println(c.trieSearch(12));
+        System.out.println(c.trieSearch(3389));
+        
+        System.out.println("POISTOT!");
+        
+        c.delete(12);
+        System.out.println(c.trieSearch(8));
+        System.out.println(c.trieSearch(-38));
+        System.out.println(c.trieSearch(11));
+        System.out.println(c.trieSearch(12));
+        System.out.println(c.trieSearch(3389));
+        
+        
+        // metodeja riittävästi (insert, delete, min ja max, search)?
+        // virheenestot (puusta haetaan stringiä jne.)?
+        // triessä ei maxia tai miniä :<
     }
 
 }
