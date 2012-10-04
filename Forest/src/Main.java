@@ -281,6 +281,7 @@ public class Main {
         // oho, toimii
         Trie c = new Trie();
         c.insert(8);
+        c.insert(8);
         c.insert(-38);
         c.insert(834);
         c.insert(12);
@@ -331,10 +332,15 @@ public class Main {
         System.out.println(c.trieSearch(12));
         System.out.println(c.trieSearch(3389));
         
+        c.printDamnIt();
+        
         
         // metodeja riittävästi (insert, delete, min ja max, search)?
         // virheenestot (puusta haetaan stringiä jne.)?
         // triessä ei maxia tai miniä :<
+        //aikavaatimukset...?
+        
+        // POISTO EI POISTA KAIKKIA LUKUJA! Esim. jos poistetaan 211, jäljelle jää 21.
     }
 
 }
