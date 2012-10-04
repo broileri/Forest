@@ -33,6 +33,8 @@ public class Trie {
         char[] number = Integer.toString(key).toCharArray();
         TrieNode[] list;
         int index;
+       // boolean atRoot = true;
+        TrieNode parent = null;
         
         // Lisätäänkö luku minus- vai plus-puuhun
         if (number[0] == '-') {
@@ -48,15 +50,18 @@ public class Trie {
             
             int place = Integer.parseInt(Character.toString(number[i]));
             
+            
             // Jos listassa ei nodea numeron kohdalla, tehdään node
              if (list[place] == null) {
-                 list[place] = new TrieNode();
+                 list[place] = new TrieNode(place);
              }
+             list[place].setParent(parent);
              // Jos luku loppuu tähän nodeen, merkitään node lopetusnodeksi
              if (i == number.length - 1) {
                  list[place].setEnd(true);
                  return;
              }
+             parent = list[place];
              list = list[place].getList();
         }       
     }
@@ -137,6 +142,7 @@ public class Trie {
     public void delete(int key) {
         
         TrieNode[] found = search(key);
+        boolean deleteThis = true;
         
         // Key ei puussa, palataan
         if (found == null) {
@@ -158,10 +164,30 @@ public class Trie {
             // Poistettavan viimeisellä solmulla "alisolmuja", poistetaan vain päättymismerkki
             if (finalList[i] != null) {
                 lastNode.setEnd(false);
-                return;
+                deleteThis = false;
             }
         }
-        found[index] = null;       
+        // Poistetaan koko solmu
+        if (deleteThis) {
+            deleteThis = false;
+            TrieNode child = found[index].getParent(), parent;
+            finalList = child.getList();
+        found[index] = null;
+        
+        // Poistetaan solmun vanhemmat, jos ne eivät ole muiden puussa olevien lukujen osia
+        while (true) {
+            for (int i = 0; i < 10; i++) {
+                
+                if (finalList[i] != null) {
+                    return; // Solmu ei ole tyhjä, palataan
+                }
+            }
+            parent = child.getParent();
+            // plääh, pitäisi olla listasta -__-
+            
+        }
+        
+        }
     }   
     
     public void printDamnIt() {

@@ -8,7 +8,9 @@ package data_structures;
 public class TrieNode {
 
     private TrieNode[] nodes;
+    private TrieNode parent;
     private boolean endsHere;
+    private int key;
 
     /**
      * Jokaisella solmulla on solmulista ja tieto siitä, päättyykö
@@ -16,9 +18,19 @@ public class TrieNode {
      *
      * @param key Solmulle annettava avainarvo.
      */
-    public TrieNode() { 
+    public TrieNode(int key) { 
         this.nodes = new TrieNode[10];
         this.endsHere = false;
+        this.parent = null;
+        this.key = key;
+    }
+    
+    public void setParent(TrieNode p) {
+        this.parent = p;
+    }
+    
+    public TrieNode getParent() {
+        return this.parent;
     }
 
     public void setEnd(boolean b) {
