@@ -31,7 +31,6 @@ public class Trie {
         char[] number = Integer.toString(key).toCharArray();
         TrieNode[] list;
         int index;
-        // boolean atRoot = true;
         TrieNode parent = this.root;
 
         // Lisätäänkö luku minus- vai plus-puuhun
