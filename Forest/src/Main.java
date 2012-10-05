@@ -340,8 +340,7 @@ public class Main {
         
         c.delete(9999);
         c.insert(3373);
-        
-        c.printDamnIt();
+      
         
         
     }
