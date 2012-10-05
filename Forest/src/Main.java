@@ -281,19 +281,22 @@ public class Main {
         // oho, toimii
         Trie c = new Trie();
         c.insert(8);
-        c.insert(8);
+        c.insert(-3);
         c.insert(-38);
-        c.insert(834);
+        c.insert(-3834);
         c.insert(12);
         c.insert(3389);
+        c.insert(9999);
+        c.insert(23857369);
+        c.insert(06);
         
         // nämäkin
         System.out.println(c.trieSearch(8));
         System.out.println(c.trieSearch(-38));
         System.out.println(c.trieSearch(11));
         System.out.println(c.trieSearch(12));
-        System.out.println(c.trieSearch(3389));
-        
+        System.out.println(c.trieSearch(-3834));        
+        System.out.println("");
         
         // poistotkin taitavat olla jees ^^
         System.out.println("POISTOT!");
@@ -303,7 +306,8 @@ public class Main {
         System.out.println(c.trieSearch(-38));
         System.out.println(c.trieSearch(11));
         System.out.println(c.trieSearch(12));
-        System.out.println(c.trieSearch(3389));
+        System.out.println(c.trieSearch(-3834));
+        System.out.println("");
         
         System.out.println("POISTOT!");
         
@@ -312,7 +316,8 @@ public class Main {
         System.out.println(c.trieSearch(-38));
         System.out.println(c.trieSearch(11));
         System.out.println(c.trieSearch(12));
-        System.out.println(c.trieSearch(3389));
+        System.out.println(c.trieSearch(-3834));
+        System.out.println("");
         
         System.out.println("POISTOT!");
         
@@ -321,7 +326,8 @@ public class Main {
         System.out.println(c.trieSearch(-38));
         System.out.println(c.trieSearch(11));
         System.out.println(c.trieSearch(12));
-        System.out.println(c.trieSearch(3389));
+        System.out.println(c.trieSearch(-3834));
+        System.out.println("");
         
         System.out.println("POISTOT!");
         
@@ -330,17 +336,14 @@ public class Main {
         System.out.println(c.trieSearch(-38));
         System.out.println(c.trieSearch(11));
         System.out.println(c.trieSearch(12));
-        System.out.println(c.trieSearch(3389));
+        System.out.println(c.trieSearch(-3834));
+        
+        c.delete(9999);
+        c.insert(3373);
         
         c.printDamnIt();
         
         
-        // metodeja riittävästi (insert, delete, min ja max, search)?
-        // virheenestot (puusta haetaan stringiä jne.)?
-        // triessä ei maxia tai miniä :<
-        //aikavaatimukset...?
-        
-        // POISTO EI POISTA KAIKKIA LUKUJA! Esim. jos poistetaan 211, jäljelle jää 21.
     }
 
 }
