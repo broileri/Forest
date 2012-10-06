@@ -5,7 +5,7 @@ import data_structures.Walks;
 
 /**
  * Binäärihakupuu
- * 
+ *
  * @author Broileri
  */
 public class Binary_Search extends Walks {
@@ -21,9 +21,8 @@ public class Binary_Search extends Walks {
 
     /**
      * Palauttaa puun juurisolmun.
-     * 
+     *
      * @see data_structures.Node
-     * 
      * @return Puun juurisolmu.
      */
     public Node getRoot() {
@@ -32,9 +31,8 @@ public class Binary_Search extends Walks {
 
     /**
      * insert lisää puuhun solmun, jolla on parametrina annettu avain.
-     * 
+     *
      * @see data_structures.Node
-     * 
      * @param key Puuhun lisättävä avain.
      */
     public void insert(int key) {
@@ -76,15 +74,14 @@ public class Binary_Search extends Walks {
         }
     }
 
-  /**
-     * Tutkii, löytyykö parametrina annetusta puusta parametrina annettua avainta.
-     * Jos löytyy, metodi palauttaa solmun, jolla on parametrina annettu avain.
-     * 
+    /**
+     * Tutkii, löytyykö parametrina annetusta puusta parametrina annettua
+     * avainta. Jos löytyy, metodi palauttaa solmun, jolla on parametrina
+     * annettu avain.
+     *
      * @see data_structures.Node
-     * 
      * @param x Puu, josta avainta etsitään.
      * @param key Avain, jota etsitään.
-     * 
      * @return Solmu, jolla on etsittävä avain tai null.
      */
     private Node nodeSearch(Node x, int key) {
@@ -100,78 +97,122 @@ public class Binary_Search extends Walks {
     }
 
     /**
-     * delete poistaa puusta solmun, jolla on parametrina annettu avain. Jos
-     * puussa ei ole poistettavaa solmua, metodi ei tee mitään.
-     * 
-     * @param key Poistettavan solmun avain.
+     * Poistaa puusta solmun, jolla on paremetrina annettu avain. Jos puussa ei
+     * ole poistettavaa solmua, metodi ei tee mitään.
+     *
+     * @see data_structures.Node
+     * @see trees.Binary_Search#nodeSearch(data_structures.Node, int)
+     * @see trees.Binary_Search#caseNoChildren(data_structures.Node)
+     * @see trees.Binary_Search#caseOneChild(data_structures.Node)
+     * @see trees.Binary_Search#caseTwoChildren(data_structures.Node)
+     * @param key Poistettavan solmun avainarvo.
      */
     public void delete(int key) {
-        
-        // Onko poistettavaa puussa
-        Node deleted = nodeSearch(this.getRoot(), key),
-                parent, child, next;        
-        if (deleted != null) {                       
-            // Jos poistettavalla ei ole lapsia...
-            if (deleted.getLeft() == null && deleted.getRight() == null) {
-                parent = deleted.getParent();
-                // Jos kyseessä on juuri
-                if (parent == null) {
-                    this.root = null;
-                    return;
-                }
-                if (deleted == parent.getLeft()) {
-                    parent.setLeft(null);
-                } else {
-                    parent.setRight(null);
-                }
-            } // Jos poistettavalla on vain yksi lapsi
-            else if (deleted.getLeft() == null || deleted.getRight() == null) {
 
-                if (deleted.getLeft() != null) {
-                    child = deleted.getLeft();
-                } else {
-                    child = deleted.getRight();
-                }
-                parent = deleted.getParent();
-                child.setParent(parent);
+        Node found = nodeSearch(this.getRoot(), key);
 
-                // Poistettava on juuri...
-                if (parent == null) {
-                    this.root = child;
-                    return;
-                }
-                if (deleted == parent.getLeft()) {
-                    parent.setLeft(child);
-                } else {
-                    parent.setRight(child);
-                }
-            } // Jos poistettavalla on kaksi lasta...
-            else {
-                next = getMin(deleted.getRight());
-                deleted.setKey(next.getKey());
-                child = next.getRight();
-                parent = next.getParent();
-                if (parent.getLeft() == next) {
-                    parent.setLeft(child);
-                } else {
-                    parent.setRight(child);
-                }
-                if (child != null) {
-                    child.setParent(parent);
-                }
+        // Jos avain on puussa, poistetaan node
+        if (found != null) {
+            if (found.getLeft() == null && found.getRight() == null) {
+                caseNoChildren(found); // Poistettavalla ei lapsia                    
+            } else if (found.getLeft() == null || found.getRight() == null) {
+                caseOneChild(found);  // Poistettavalla yksi lapsi
+
+            } else {
+                caseTwoChildren(found); // Poistettavalla kaksi lasta
             }
         }
-    }    
-
+    }
 
     /**
-     * Tutkii NodeSearch-metodin avulla, löytyykö puusta parametrina
-     * annettu arvo.
-     * 
-     * @see trees.AVL#nodeSearch(data_structures.Node, int) 
-     * 
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla ei ole
+     * lainkaan lapsisolmuja.
+     *
+     * @see data_structures.Node
+     * @see trees.Binary_Search#delete(int)
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private void caseNoChildren(Node deleteThis) {
+
+        Node parent = deleteThis.getParent();
+        // Jos kyseessä on juuri, puusta tulee tyhjä
+        if (parent == null) {
+            this.root = null;
+            return;
+        }
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(null);
+        } else {
+            parent.setRight(null);
+        }
+    }
+
+    /**
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla on yksi
+     * lapsisolmu.
+     *
+     * @see data_structures.Node
+     * @see trees.Binary_Search#delete(int)
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private void caseOneChild(Node deleteThis) {
+
+        Node child, parent;
+        if (deleteThis.getLeft() != null) {
+            child = deleteThis.getLeft();
+        } else {
+            child = deleteThis.getRight();
+        }
+        parent = deleteThis.getParent();
+        child.setParent(parent);
+
+        // Poistettava on juuri
+        if (parent == null) {
+            this.root = child;
+            return;
+        }
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+    }
+
+    /**
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla on kaksi
+     * lapsisolmua.
+     *
+     * @see data_structures.Node
+     * @see trees.Binary_Search#delete(int)
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private void caseTwoChildren(Node deleteThis) {
+
+        Node next, child, parent;
+
+        next = getMin(deleteThis.getRight());
+        deleteThis.setKey(next.getKey());
+        child = next.getRight();
+        parent = next.getParent();
+        if (parent.getLeft() == next) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+        if (child != null) {
+            child.setParent(parent);
+        }
+    }
+
+    /**
+     * Tutkii NodeSearch-metodin avulla, löytyykö puusta parametrina annettu
+     * arvo.
+     *
+     * @see trees.Binary_Search#nodeSearch(data_structures.Node, int)
      * @param key Avain, jota etsitään.
-     * 
      * @return Tieto siitä, onko avain puussa vai ei.
      */
     public boolean search(int key) {
@@ -187,9 +228,7 @@ public class Binary_Search extends Walks {
      * Etsii annetusta (ali)puusta solmun, jolla on pienin avain.
      *
      * @see data_structures.Node
-     *
      * @param x Puu, jonka pienintä solmua etsitään.
-     *
      * @return Pieniavaimisin x:n alipuun solmu.
      */
     private Node getMin(Node x) {
@@ -204,9 +243,7 @@ public class Binary_Search extends Walks {
      * Etsii annetusta (ali)puusta solmun, jolla on suurin avain.
      *
      * @see data_structures.Node
-     *
      * @param x Puu, jonka suurinta solmua etsitään.
-     *
      * @return Suuriavaimisin x:n alipuun solmu.
      */
     private Node getMax(Node x) {
@@ -220,8 +257,7 @@ public class Binary_Search extends Walks {
     /**
      * Etsii puusta suurimman avaimen getMax-metodin avulla.
      *
-     * @see trees.AVL#getMax(data_structures.Node)
-     *
+     * @see trees.Binary_Search#getMax(data_structures.Node)
      * @return Puun suurin avain.
      */
     public int getMaxKey() {
@@ -231,12 +267,10 @@ public class Binary_Search extends Walks {
     /**
      * Etsii puusta pienimmän avaimen getMin-metodin avulla.
      *
-     * @see trees.AVL#getMin(data_structures.Node)
-     *
+     * @see trees.Binary_Search#getMin(data_structures.Node)
      * @return Puun pienin avain.
      */
     public int getMinKey() {
         return getMin(this.root).getKey();
     }
-
 }

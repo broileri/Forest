@@ -22,7 +22,7 @@ public class Splay extends Walks {
     /**
      * Palauttaa puun juurisolmun.
      *
-     * @see data_structures.Node     
+     * @see data_structures.Node
      * @return Puun juurisolmu.
      */
     public Node getRoot() {
@@ -30,13 +30,13 @@ public class Splay extends Walks {
     }
 
     /**
-     * Lisää puuhun insertin avulla solmun, jolla on parametrina annettu
-     * avain ja sen jälkeen splayaa uuden solmun juureksi. Jos puussa on jo
-     * solmu, jolla on parametrina annettu avain, lisäystä ei tehdä, mutta
-     * solmu splayataan kuitenkin juureksi.
-     * 
+     * Lisää puuhun insertin avulla solmun, jolla on parametrina annettu avain
+     * ja sen jälkeen splayaa uuden solmun juureksi. Jos puussa on jo solmu,
+     * jolla on parametrina annettu avain, lisäystä ei tehdä, mutta solmu
+     * splayataan kuitenkin juureksi.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#insert(int) 
+     * @see trees.Splay#insert(int)
      * @param key Puuhun lisättävän solmun avain.
      */
     public void splayInsert(int key) {
@@ -130,86 +130,12 @@ public class Splay extends Walks {
     }
 
     /**
-     * Metodi poistaa apumetodinsa deleteRootin avulla 
-     * puusta solmun, jolla on parametrina annettu avain.
-     * Solmu splayataan ensin juureksi, minkä jälkeen se poistetaan
-     * ja juuren oikean alipuun pienin arvo splayataan uudeksi juureksi.
-     * Jos puussa ei ole sellaista solmua, johon parametri key viittaa,
-     * splayataan juureen kuitenkin se solmu, joka olisi ollut splayDeleten
-     * kohteen vanhempi.
-     * 
-     * @see trees.Splay#deleteRoot() 
-     * @see trees.Splay#splay(data_structures.Node) 
-     * @see data_structures.Node
-     * @param key Poistettavan solmun avain.
-     */
-    public void splayDelete(int key) {
-
-        if (this.root != null) {
-            Node deleted = nodeSearch(this.root, key);
-            splay(deleted);
-            // key on puussa
-            if (deleted.getKey() == key) {                
-                deleteRoot();
-            }
-        }
-    }
-
-    /**
-     * splayDeleten käyttämä apumetodi, joka hoitaa varsinaisen
-     * juuren splayatun alkion poistamisen.
-     * 
-     * @see trees.Splay#deleteRoot() 
-     * @see trees.Splay#splay(data_structures.Node) 
-     * @see data_structures.Node
-     */
-    private void deleteRoot() {
-
-        Node deleted = this.getRoot(), newRoot;
-
-        // Jos juurella ei ole lapsia...
-        if (deleted.getLeft() == null && deleted.getRight() == null) {
-            this.root = null;
-        } // Jos poistettavalla on vain yksi lapsi
-        else if (deleted.getLeft() == null || deleted.getRight() == null) {
-
-            if (deleted.getLeft() != null) {
-                this.root = deleted.getLeft();
-                this.root.setParent(null);
-            } else {
-                newRoot = getMin(this.root.getLeft());
-                splay(newRoot);
-            }
-        } // Jos poistettavalla on kaksi lasta...
-        else {
-            // poistettava on nyt juuri
-            Node left = deleted.getLeft();
-            Node right = deleted.getRight();
-            newRoot = getMin(right);
-            this.root = null;
-            left.setParent(null);
-            right.setParent(null);
-
-            if (right == null) {
-                this.root = left;
-            }
-            if (right == newRoot) {
-                this.root = right;
-                right.setLeft(left);
-            } else {
-                splay(newRoot);
-                this.root.setLeft(left);
-            }
-        }
-    }
-
-    /**
      * Tutkii NodeSearch-metodin avulla, löytyykö puusta solmu, jolla on
      * parametrina annettu key. Jos löytyy, ko. solmu splayataan puun juureksi.
      *
      * @see trees.Splay#nodeSearch(data_structures.Node, int)
-     * @see data_structures.Node   
-     * @param key Avain, jota etsitään.   
+     * @see data_structures.Node
+     * @param key Avain, jota etsitään.
      * @return Tieto siitä, onko avain puussa vai ei.
      */
     public boolean search(int key) {
@@ -227,7 +153,7 @@ public class Splay extends Walks {
     /**
      * Etsii annetusta (ali)puusta solmun, jolla on pienin avain.
      *
-     * @see data_structures.Node    
+     * @see data_structures.Node
      * @param x Puu, jonka pienintä solmua etsitään.
      * @return Pieniavaimisin x:n alipuun solmu.
      */
@@ -242,8 +168,8 @@ public class Splay extends Walks {
     /**
      * Etsii annetusta (ali)puusta solmun, jolla on suurin avain.
      *
-     * @see data_structures.Node   
-     * @param x Puu, jonka suurinta solmua etsitään.   
+     * @see data_structures.Node
+     * @param x Puu, jonka suurinta solmua etsitään.
      * @return Suuriavaimisin x:n alipuun solmu.
      */
     private Node getMax(Node x) {
@@ -258,8 +184,8 @@ public class Splay extends Walks {
      * Etsii puusta suurimman avaimen getMax-metodin avulla, minkä jälkeen
      * splayaa sen solmun puun juureksi, jolla suurin avain on.
      *
-     * @see trees.Splay#getMax(data_structures.Node) 
-     * @see trees.Splay#getMax(data_structures.Node) 
+     * @see trees.Splay#getMax(data_structures.Node)
+     * @see trees.Splay#getMax(data_structures.Node)
      * @return Puun suurin avain.
      */
     public int getMaxKey() {
@@ -272,7 +198,7 @@ public class Splay extends Walks {
      * Etsii puusta pienimmän avaimen getMin-metodin avulla, minkä jälkeen
      * splayaa sen solmun puun juureksi, jolla pienin avain on.
      *
-     * @see trees.Splay#getMin(data_structures.Node)   
+     * @see trees.Splay#getMin(data_structures.Node)
      * @see trees.Splay#getMin(data_structures.Node)
      * @return Puun pienin avain.
      */
@@ -325,12 +251,13 @@ public class Splay extends Walks {
     }
 
     /**
-     * Metodi vaihtaa parametrina annetun solmun puun juureksi left- ja 
+     * Metodi vaihtaa parametrina annetun solmun puun juureksi left- ja
      * right-kiertojen avulla.
-     * 
-     * @see trees.Splay#rotateLeft(data_structures.Node) 
-     * @see trees.Splay#rotateRight(data_structures.Node) 
-     * @param x 
+     *
+     * @see trees.Splay#rotateLeft(data_structures.Node)
+     * @see trees.Splay#rotateRight(data_structures.Node)
+     * @see trees.Splay#fixParent(data_structures.Node) 
+     * @param x
      */
     public void splay(Node x) {
 
@@ -376,12 +303,13 @@ public class Splay extends Walks {
     }
 
     /**
-     * splayn käyttämä apumetodi, joka korjaa äskettäin
-     * käytetyn rotaten palauttaman solmun vanhemman oikeanlaiseksi.
-     * 
+     * splayn käyttämä apumetodi, joka korjaa äskettäin käytetyn rotaten
+     * palauttaman solmun vanhemman oikeanlaiseksi.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#rotateLeft(data_structures.Node) 
-     * @see trees.Splay#rotateRight(data_structures.Node) 
+     * @see trees.Splay#splay(data_structures.Node) 
+     * @see trees.Splay#rotateLeft(data_structures.Node)
+     * @see trees.Splay#rotateRight(data_structures.Node)
      * @param x rotaten palauttama solmu.
      */
     private void fixParent(Node x) {
@@ -394,6 +322,129 @@ public class Splay extends Walks {
             parent.setRight(x);
         } else {
             parent.setLeft(x);
+        }
+    }
+
+    /**
+     * Poistaa puusta solmun, jolla on paremetrina annettu avain, ja splayaa 
+     * sen vanhemman juureen. Tai jos puussa ei ole poistettavaa solmua, metodi
+     * splayaa juureen sen solmun, joka olisi ollut poistettavan solmun vanhempi.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#caseNoChildren(data_structures.Node) 
+     * @see trees.Splay#caseOneChild(data_structures.Node) 
+     * @see trees.Splay#caseTwoChildren(data_structures.Node) 
+     * @see trees.Splay#nodeSearch(data_structures.Node, int) 
+     * @see trees.Splay#splay(data_structures.Node) 
+     * @param key Poistettavan solmun avainarvo.
+     */
+    public void delete(int key) {
+
+        Node found = nodeSearch(this.getRoot(), key);
+
+        // Jos avain on puussa, poistetaan node ja splayataan sen vanhempi
+        if (found.getKey() == key) {
+
+            if (found.getLeft() == null && found.getRight() == null) {
+                if (caseNoChildren(found)) { // Poistettavalla ei lapsia
+                    return;
+                }
+            } else if (found.getLeft() == null || found.getRight() == null) {
+                if (caseOneChild(found)) { // Poistettavalla yksi lapsi
+                    return;
+                }
+            } else {
+                caseTwoChildren(found); // Poistettavalla kaksi lasta
+            }
+            splay(found.getParent());
+        } else {
+            splay(found); // Jos avainta ei ole puussa, splayataan se node, joka olisi ollut poistettavan vanhempi
+        }
+    }
+
+    /**
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
+     * jolla ei ole lainkaan lapsisolmuja.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#delete(int) 
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private boolean caseNoChildren(Node deleteThis) {
+
+        Node parent = deleteThis.getParent();
+        // Jos kyseessä on juuri, puusta tulee tyhjä
+        if (parent == null) {
+            this.root = null;
+            return true;
+        }
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(null);
+        } else {
+            parent.setRight(null);
+        }
+        return false;
+    }
+
+    /**
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
+     * jolla on yksi lapsisolmu.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#delete(int) 
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private boolean caseOneChild(Node deleteThis) {
+
+        Node child, parent;
+        if (deleteThis.getLeft() != null) {
+            child = deleteThis.getLeft();
+        } else {
+            child = deleteThis.getRight();
+        }
+        parent = deleteThis.getParent();
+        child.setParent(parent);
+
+        // Poistettava on juuri
+        if (parent == null) {
+            this.root = child;
+            return true;
+        }
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+
+        return false;
+    }
+
+    /**
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
+     * jolla on kaksi lapsisolmua.
+     * 
+     * @see data_structures.Node
+     * @see trees.Splay#delete(int) 
+     * @param deleteThis Node, joka poistetaan.
+     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
+     */
+    private void caseTwoChildren(Node deleteThis) {
+
+        Node next, child, parent;
+
+        next = getMin(deleteThis.getRight());
+        deleteThis.setKey(next.getKey());
+        child = next.getRight();
+        parent = next.getParent();
+        if (parent.getLeft() == next) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+        if (child != null) {
+            child.setParent(parent);
         }
     }
 }

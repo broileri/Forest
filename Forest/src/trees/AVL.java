@@ -25,7 +25,6 @@ public class AVL extends Walks {
      * Palauttaa puun juurisolmun.
      *
      * @see data_structures.Node
-     *
      * @return Puun juurisolmu.
      */
     public Node getRoot() {
@@ -35,8 +34,7 @@ public class AVL extends Walks {
     /**
      * Asettaa puulle juurisolmun.
      *
-     * @see data_structures.Node
-     *
+     * @see data_structures.Node     
      */
     private void setRoot(Node root) {
         this.root = root;
@@ -77,19 +75,19 @@ public class AVL extends Walks {
     }
 
     /**
-     * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää p:n vanhemman
-     * lapsen ja korkeuden sen jälkeen, kun p:ssä ollut epätasapaino on
-     * korjattu.
+     * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää
+     * p:n vanhemman lapsen ja korkeuden sen jälkeen, kun p:ssä ollut
+     * epätasapaino on korjattu.
      *
      * @see trees.AVL#AVLinsert(int key)
-     * @see trees.AVL#balanceLeftsGrandchild(data_structures.Node) 
-     * @see trees.AVL#balanceRightsGrandchild(data_structures.Node) 
+     * @see trees.AVL#balanceLeftsGrandchild(data_structures.Node)
+     * @see trees.AVL#balanceRightsGrandchild(data_structures.Node)
      * @see data_structures.Node
      * @param parent p:n vanhempi.
      * @param subtree Alipuu, joka on syntynyt puun kierroista ja joka nyt
      * asetetaan parentin lapseksi.
-     * @param p Solmu, jonka epätasapaino korjattiin äskettäin.     
-     * 
+     * @param p Solmu, jonka epätasapaino korjattiin äskettäin.
+     *
      */
     private void fixParent(Node parent, Node subtree, Node p) {
 
@@ -214,9 +212,11 @@ public class AVL extends Walks {
      * silloin, kun tasapainon on aiheuttanut käsiteltävän solmun vasemman
      * lapsen lapsi.
      *
-     * @see trees.AVL#fixParent(data_structures.Node, data_structures.Node, data_structures.Node) 
-     * @see trees.AVL#AVLdelete(int) 
-     * @see trees.AVL#AVLinsert(int)      * 
+     * @see trees.AVL#fixParent(data_structures.Node, data_structures.Node,
+     * data_structures.Node)
+     * @see trees.AVL#AVLdelete(int)
+     * @see trees.AVL#AVLinsert(int)
+     *
      * @param p Käsiteltävä solmu.
      */
     private void balanceLeftsGrandchild(Node p) {
@@ -237,9 +237,10 @@ public class AVL extends Walks {
      * AVLinsertin ja AVLdeleten käyttämä apumetodi, joka tasapainottaa puuta
      * silloin, kun tasapainon on aiheuttanut käsiteltävän solmun oikean lapsen
      * lapsi.
-     * 
-     * @see trees.AVL#fixParent(data_structures.Node, data_structures.Node, data_structures.Node) 
-     * 
+     *
+     * @see trees.AVL#fixParent(data_structures.Node, data_structures.Node,
+     * data_structures.Node)
+     *
      * @param p Käsiteltävä solmu.
      */
     private void balanceRightsGrandchild(Node p) {
@@ -260,72 +261,112 @@ public class AVL extends Walks {
      * AVLdeleten käyttämä apumetodi, joka hoitaa varsinaisen poistamisen.
      * Poistaa alkion, jolla on parametrina annettu avain.
      *
+     * @see trees.AVL#nodeSearch(data_structures.Node, int) 
+     * @see trees.AVL#caseNoChildren(data_structures.Node) 
+     * @see trees.AVL#caseOneChild(data_structures.Node) 
+     * @see trees.AVL#caseTwoChildren(data_structures.Node) 
      * @param key Puusta poistettava avain.
      * @return Viite puusta poistettuun solmuun tai null, jos poistettavaa
      * avainta ei löytynyt puusta.
      */
     private Node delete(int key) {
 
-        Node deleted = nodeSearch(this.getRoot(), key),
-                parent, child;
+        Node deleted = nodeSearch(this.getRoot(), key);
 
         // Onko poistettavaa puussa
         if (deleted != null) {
-
-            // Jos poistettavalla ei ole lapsia...
             if (deleted.getLeft() == null && deleted.getRight() == null) {
-                parent = deleted.getParent();
-                // Jos kyseessä on juuri
-                if (parent == null) {
-                    this.root = null;
-                    return deleted;
-                }
-                if (deleted == parent.getLeft()) {
-                    parent.setLeft(null);
-                } else {
-                    parent.setRight(null);
-                }
-                return deleted;
-            } // Jos poistettavalla on vain yksi lapsi
-            else if (deleted.getLeft() == null || deleted.getRight() == null) {
-
-                if (deleted.getLeft() != null) {
-                    child = deleted.getLeft();
-                } else {
-                    child = deleted.getRight();
-                }
-                parent = deleted.getParent();
-                child.setParent(parent);
-
-                // Poistettava on juuri...
-                if (parent == null) {
-                    this.root = child;
-                    return deleted;
-                }
-                if (deleted == parent.getLeft()) {
-                    parent.setLeft(child);
-                } else {
-                    parent.setRight(child);
-                }
-                return deleted;
-            } // Jos poistettavalla on kaksi lasta...
-            else {
-                Node next = getMin(deleted.getRight());
-                deleted.setKey(next.getKey());
-                child = next.getRight();
-                parent = next.getParent();
-                if (parent.getLeft() == next) {
-                    parent.setLeft(child);
-                } else {
-                    parent.setRight(child);
-                }
-                if (child != null) {
-                    child.setParent(parent);
-                }
-                return next;
+                return caseNoChildren(deleted); // Poistettavalla ei lapsia                
+            } else if (deleted.getLeft() == null || deleted.getRight() == null) {
+                return caseOneChild(deleted); // Poistettavalla on yksi lapsi
+            } else {
+                return caseTwoChildren(deleted); // Poistettavalla on kaksi lasta
             }
+        }        
+        return null; // Jos poistettavaa ei ollut puussa, palautetaan null
+    }
+
+    /**
+     * deleten apumetodi, joka poistaa lapsettoman solmun.
+     * 
+     * @see trees.AVL#delete(int) 
+     * @see data_structures.Node
+     * @param deleteThis Poistettava solmu.
+     * @return 
+     */
+    private Node caseNoChildren(Node deleteThis) {
+
+        Node parent = deleteThis.getParent();
+
+        if (parent == null) {
+            this.root = null; // Kyseessä on juuri
+            return deleteThis;
         }
-        return null;
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(null);
+        } else {
+            parent.setRight(null);
+        }
+        return deleteThis;
+    }
+
+    /**
+     * deleten apumetodi, joka poistaa yksilapsisen solmun.
+     * 
+     * @see trees.AVL#delete(int) 
+     * @see data_structures.Node
+     * @param deleteThis Poistettava solmu.
+     * @return 
+     */
+    private Node caseOneChild(Node deleteThis) {
+
+        Node child, parent;
+        if (deleteThis.getLeft() != null) {
+            child = deleteThis.getLeft();
+        } else {
+            child = deleteThis.getRight();
+        }
+        parent = deleteThis.getParent();
+        child.setParent(parent);
+
+
+        if (parent == null) {
+            this.root = child; // Poistettava on juuri
+            return deleteThis;
+        }
+        if (deleteThis == parent.getLeft()) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+        return deleteThis;
+    }
+
+    /**
+     * deleten apumetodi, joka poistaa kaksilapsisen solmun.
+     * 
+     * @see trees.AVL#delete(int) 
+     * @see data_structures.Node
+     * @see trees.AVL#getMin(data_structures.Node) 
+     * @param deleteThis Poistettava solmu.
+     * @return 
+     */
+    private Node caseTwoChildren(Node deleteThis) {
+
+        Node next = getMin(deleteThis.getRight()),
+                child, parent;
+        deleteThis.setKey(next.getKey());
+        child = next.getRight();
+        parent = next.getParent();
+        if (parent.getLeft() == next) {
+            parent.setLeft(child);
+        } else {
+            parent.setRight(child);
+        }
+        if (child != null) {
+            child.setParent(parent);
+        }
+        return next;
     }
 
     /**
@@ -447,7 +488,7 @@ public class AVL extends Walks {
      * arvo.
      *
      * @see trees.AVL#nodeSearch(data_structures.Node, int)
-     * @param key Avain, jota etsitään. 
+     * @param key Avain, jota etsitään.
      * @return Tieto siitä, onko avain puussa vai ei.
      */
     public boolean search(int key) {

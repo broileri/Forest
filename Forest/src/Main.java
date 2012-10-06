@@ -172,7 +172,7 @@ public class Main {
     
     * 
     */
-        /*
+       
         Splay s = new Splay();
         s.splayInsert(18);
         s.splayInsert(5);
@@ -219,7 +219,7 @@ public class Main {
         //                     \
         //                      20
         //
-       /* 
+        
         System.out.println("\nHAKUJA");
         
         System.out.println(s.search(4));
@@ -249,34 +249,67 @@ public class Main {
         // insert toimii kai hyvin :)))
         // to do: splay-testi, trie?, käyttis, dokkarit
         
+        
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        
+        //s.splayDelete(4);
+        s.delete(4);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        //s.splayDelete(20);
+        s.delete(20);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        //s.splayDelete(6);
+        s.delete(6);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        //s.splayDelete(33);
+        s.delete(33);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+       
+        
+        //s.splayDelete(11);
+        s.delete(11);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+       
+        s.delete(18);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(5);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(1);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(9);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(30);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(8);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
+        s.delete(7);
+        s.printLevelOrder(s.getRoot());
+        System.out.println("");
+        
         /*
-        
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        s.splayDelete(4);
-        s.printLevelOrder(s.getRoot());
-        System.out.println("");
-        
-        s.splayDelete(20);
-        s.printLevelOrder(s.getRoot());
-        System.out.println("");
-        
-        s.splayDelete(6);
-        s.printLevelOrder(s.getRoot());
-        System.out.println("");
-        
-        s.splayDelete(33);
-        s.printLevelOrder(s.getRoot());
-        System.out.println("");
-       
-        
-        s.splayDelete(11);
-        s.printLevelOrder(s.getRoot());
-        System.out.println("");
-       
-        
-        */
         
         // oho, toimii
         Trie c = new Trie();
@@ -285,7 +318,7 @@ public class Main {
         c.insert(-38);
         c.insert(-3834);
         c.insert(12);
-        c.insert(3389);
+        c.insert(3389);                     
         c.insert(9999);
         c.insert(23857369);
         c.insert(06);
@@ -352,6 +385,8 @@ public class Main {
         System.out.println(c.trieSearch(-655));
       
         
+        * 
+        */
         
     }
 
