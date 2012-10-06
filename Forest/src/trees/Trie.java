@@ -7,7 +7,7 @@ import data_structures.TrieNode;
  * @author Broileri
  */
 public class Trie {
-   
+
     private TrieNode root;
 
     /**
@@ -116,7 +116,6 @@ public class Trie {
             // Jos ollaan päästy haettavan luvun viimeiseen osaan ja solmussa on tosi endsHere-arvo, key on puussa!
             if (i == number.length - 1) {
                 if (list[place].getEnd()) {
-                    //return list[place];
                     return list;
                 }
             }
@@ -131,29 +130,29 @@ public class Trie {
      *
      * @see data_structures.TrieNode
      * @see trees.Trie#search(int)
-     * @param key
+     * @see trees.Trie#deleteChildlessParents(data_structures.TrieNode, int) 
+     * @see trees.Trie#pickLast(int) 
+     * @see trees.Trie#deleteAtRoot(int) 
+     * @param key Puusta poistettava arvo.
      */
     public void delete(int key) {
 
         TrieNode[] found = search(key);
+        boolean deleteThis = true;
 
         // Key ei puussa, palataan
         if (found == null) {
             return;
         }
+        // Napataan keyn viimeinen numero (esim. 2634:sta se olisi 4)        
+        int index = pickLast(key);
 
-        // Napataan keyn viimeinen numero (esim. 2634:sta se olisi 4)
-        String value = Integer.toString(key);
-        value = value.substring(value.length() - 1);
-        int index = Integer.parseInt(value);
-
-        // Napataan keyn viimeisellä solmulla oleva solmulista (siis Noden, jonka key on 4, solmulista)
+        // Napataan keyn viimeisellä solmulla oleva solmulista
         TrieNode lastNode = found[index];
         TrieNode[] finalList = lastNode.getList();
-        boolean deleteThis = true;
 
-        // Käydään keyn viimeisen solmun lista läpi (siis käydään sen solmun, jonka key on 4, solmulista läpi)
-        for (int i = 0; i < finalList.length; i++) {
+        // Käydään keyn viimeisen solmun lista läpi
+        for (int i = 0; i < 10; i++) {
 
             // Solmulla "alisolmuja", poistetaan vain päättymismerkki (siis 4:n solmulista ei ole tyhjä)
             if (finalList[i] != null) {
@@ -162,49 +161,87 @@ public class Trie {
                 break;
             }
         }
-
-        // Poistetaan koko solmu, jos se oli tyhjä, ja lähdetään puussa ylöspäin (siis poistetaan solmu, jonka key on 4)
+        // Poistetaan koko viimeinen solmu, jos se oli tyhjä
         if (deleteThis) {
-            TrieNode p = found[index].getParent(), parent;
-            // Ollaan juuressa
+            TrieNode p = found[index].getParent();            
             if (p.getParent() == null) {
-                deleteAtRoot(index);
+                deleteAtRoot(key); // Ollaan juuressa - puhdistetaan juurilista ja palataan
                 return;
             }
+            // Poistetaan vanhempia ja isovanhempia siihen asti, että löydetään lapsellinen vanhempi tai ollaan juuressa
             p.getList()[index] = null;
-            index = p.getKey();
-
-            // Poistetaan solmun vanhemmat, jos ne eivät ole muiden puussa olevien lukujen osia
-            while (true) {
-                // Joku luku päättyy käsiteltävään Nodeen, joten sitä ei voida poistaa - palataan
-                if (p.getEnd()) {
-                    return;
-                }
-                for (int i = 0; i < 10; i++) {
-
-                    if (p.getList()[i] != null) {
-                        return; // Solmu ei ole tyhjä, palataan
-                    }
-                }
-                parent = p.getParent();
-                if (parent.getMinus() == null) {
-                    parent.getList()[index] = null;
-                    p = parent;
-                } // Ollaan juuressa
-                else {
-                    deleteAtRoot(index);
-                    return;
-                }
-            }
+            deleteChildlessParents(p, p.getKey());
         }
     }
 
+    /**
+     * Apumetodi deletelle. Poistaa juureen asti deleten poistaman solmun 
+     * sellaiset vanhemmat, joilla ei ole muita lapsia kuin poistettu solmu
+     * (tai sen vanhempi tai sen isovanhempi...).
+     * 
+     * @param p deleten poistaman solmun vanhempi, eli solmu, jonka arvo on poistettavan keyn toiseksi
+     * viimeinen luku.
+     * @param index p:n arvo/key.
+     */
+    private void deleteChildlessParents(TrieNode p, int index) {
+
+        TrieNode parent;
+        // Poistetaan solmun vanhemmat, jos ne eivät ole muiden puussa olevien lukujen osia
+        while (true) {
+            // Joku luku päättyy käsiteltävään Nodeen, joten sitä ei voida poistaa - palataan
+            if (p.getEnd()) {
+                return;
+            }
+            for (int i = 0; i < 10; i++) {
+
+                if (p.getList()[i] != null) {
+                    return; // Solmu ei ole tyhjä, palataan
+                }
+            }
+            parent = p.getParent();
+            if (parent.getMinus() == null) {
+                parent.getList()[index] = null;
+                p = parent;
+            } // Ollaan juuressa
+            else {
+                deleteAtRoot(index);
+                return;
+            }
+        }
+    }
+    
+    /**
+     * deleten apumetodi. Palauttaa annetun kokonaisluvun viimeisen merkin.
+     * 
+     * @see data_structures.TrieNode
+     * @see trees.Trie#delete(int) 
+     * @param key Kokonaisluku, jonka viimeinen merkki halutaan tietää.
+     * @return Parametrina annetun kokonaisluvun viimeinen merkki.
+     */
+    private int pickLast(int key) {
+
+        String value = Integer.toString(key);
+        value = value.substring(value.length() - 1);
+        return Integer.parseInt(value);
+
+    }
+
+    /**
+     * deleten ja deleteChildlessParentsin apumetodi. Kun jompi kumpi metodeista
+     * on päässyt juureen asti, deleteAtRoot poistaa keyn joko juuren plus- tai 
+     * minus-listasta.
+     * 
+     * @see data_structures.TrieNode
+     * @see trees.Trie#delete(int) 
+     * @see trees.Trie#deleteChildlessParents(data_structures.TrieNode, int) 
+     * @param key Poistettava arvo.
+     */
     private void deleteAtRoot(int key) {
 
         if (key < 0) {
-            this.root.getMinus()[key] = null;
+            this.root.getMinus()[-key] = null;
         } else {
             this.root.getPlus()[key] = null;
         }
-    }  
+    }
 }

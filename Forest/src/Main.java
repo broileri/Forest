@@ -338,8 +338,18 @@ public class Main {
         System.out.println(c.trieSearch(12));
         System.out.println(c.trieSearch(-3834));
         
-        c.delete(9999);
-        c.insert(3373);
+        System.out.println("");
+        
+        c.insert(-2);
+        c.delete(-2);
+        System.out.println(c.trieSearch(-2));
+        c.insert(-65);
+        c.delete(-65);
+        System.out.println(c.trieSearch(-65));
+        c.insert(-65);
+        c.insert(-655);
+        c.delete(-65);
+        System.out.println(c.trieSearch(-655));
       
         
         
