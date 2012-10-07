@@ -120,13 +120,23 @@ public class Splay extends Walks {
             if (x.getKey() == key) {
                 return x;
             }
+            // Ei löytynyt, mennään vasemmalle tai palautetaan muka-vanhempi
             if (key < x.getKey()) {
-                return nodeSearch(x.getLeft(), key);
+                if (x.getLeft() != null) {
+                    return nodeSearch(x.getLeft(), key);
+                } else {
+                    return x;
+                }
+                // Ei löytynyt, mennään oikealle tai palautetaan muka-vanhempi
             } else {
-                return nodeSearch(x.getRight(), key);
+                if (x.getRight() != null) {
+                    return nodeSearch(x.getRight(), key);
+                } else {
+                    return x;
+                }
             }
         }
-        return null;
+        return null; // Tähän kohtaan ei tässä toteutuksessa päästä koskaan
     }
 
     /**
@@ -256,10 +266,10 @@ public class Splay extends Walks {
      *
      * @see trees.Splay#rotateLeft(data_structures.Node)
      * @see trees.Splay#rotateRight(data_structures.Node)
-     * @see trees.Splay#fixParent(data_structures.Node) 
+     * @see trees.Splay#fixParent(data_structures.Node)
      * @param x
      */
-    public void splay(Node x) {
+    private void splay(Node x) {
 
         Node p, gp, current;
 
@@ -307,7 +317,7 @@ public class Splay extends Walks {
      * palauttaman solmun vanhemman oikeanlaiseksi.
      *
      * @see data_structures.Node
-     * @see trees.Splay#splay(data_structures.Node) 
+     * @see trees.Splay#splay(data_structures.Node)
      * @see trees.Splay#rotateLeft(data_structures.Node)
      * @see trees.Splay#rotateRight(data_structures.Node)
      * @param x rotaten palauttama solmu.
@@ -326,16 +336,17 @@ public class Splay extends Walks {
     }
 
     /**
-     * Poistaa puusta solmun, jolla on paremetrina annettu avain, ja splayaa 
-     * sen vanhemman juureen. Tai jos puussa ei ole poistettavaa solmua, metodi
-     * splayaa juureen sen solmun, joka olisi ollut poistettavan solmun vanhempi.
-     * 
+     * Poistaa puusta solmun, jolla on paremetrina annettu avain, ja splayaa sen
+     * vanhemman juureen. Tai jos puussa ei ole poistettavaa solmua, metodi
+     * splayaa juureen sen solmun, joka olisi ollut poistettavan solmun
+     * vanhempi.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#caseNoChildren(data_structures.Node) 
-     * @see trees.Splay#caseOneChild(data_structures.Node) 
-     * @see trees.Splay#caseTwoChildren(data_structures.Node) 
-     * @see trees.Splay#nodeSearch(data_structures.Node, int) 
-     * @see trees.Splay#splay(data_structures.Node) 
+     * @see trees.Splay#caseNoChildren(data_structures.Node)
+     * @see trees.Splay#caseOneChild(data_structures.Node)
+     * @see trees.Splay#caseTwoChildren(data_structures.Node)
+     * @see trees.Splay#nodeSearch(data_structures.Node, int)
+     * @see trees.Splay#splay(data_structures.Node)
      * @param key Poistettavan solmun avainarvo.
      */
     public void delete(int key) {
@@ -356,18 +367,20 @@ public class Splay extends Walks {
             } else {
                 caseTwoChildren(found); // Poistettavalla kaksi lasta
             }
-            splay(found.getParent());
+            if (found.getParent() != null) {
+                splay(found.getParent());
+            }
         } else {
             splay(found); // Jos avainta ei ole puussa, splayataan se node, joka olisi ollut poistettavan vanhempi
         }
     }
 
     /**
-     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
-     * jolla ei ole lainkaan lapsisolmuja.
-     * 
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla ei ole
+     * lainkaan lapsisolmuja.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#delete(int) 
+     * @see trees.Splay#delete(int)
      * @param deleteThis Node, joka poistetaan.
      * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
@@ -388,11 +401,11 @@ public class Splay extends Walks {
     }
 
     /**
-     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
-     * jolla on yksi lapsisolmu.
-     * 
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla on yksi
+     * lapsisolmu.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#delete(int) 
+     * @see trees.Splay#delete(int)
      * @param deleteThis Node, joka poistetaan.
      * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
@@ -422,11 +435,11 @@ public class Splay extends Walks {
     }
 
     /**
-     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen,
-     * jolla on kaksi lapsisolmua.
-     * 
+     * Apumetodi deletelle. Hoitaa sellaisen solmun poistamisen, jolla on kaksi
+     * lapsisolmua.
+     *
      * @see data_structures.Node
-     * @see trees.Splay#delete(int) 
+     * @see trees.Splay#delete(int)
      * @param deleteThis Node, joka poistetaan.
      * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */

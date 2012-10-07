@@ -8,10 +8,10 @@ package data_structures;
 public class Node {
 
     private Node parent, left, right;
-    private int key, height;  
+    private int key; 
 
     /**
-     * Jokaisella solmulla on korkeus, avainarvo sekä
+     * Jokaisella solmulla on avainarvo sekä
      * viiteet solmun vanhempaan ja molempiin lapsiin.
      * 
      * @param key Solmulle annettava avainarvo.
@@ -21,7 +21,6 @@ public class Node {
         this.parent = null;        
         this.left = null;
         this.right = null;
-        this.height = -1;
     }
     
     public Node getParent() {
@@ -54,14 +53,5 @@ public class Node {
     
     public void setKey(int key) {
         this.key = key;
-    }
-    
-    public int getHeight() {
-        return this.height;
-    }
-    
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
+    } 
 }

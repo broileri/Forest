@@ -62,10 +62,6 @@ public class TrieNode {
     public boolean getEnd() {
         return this.endsHere;
     }
-    
-    public void setList(TrieNode[] l) {
-        this.list = l;
-    }
 
     public TrieNode[] getList() {
         return this.list;

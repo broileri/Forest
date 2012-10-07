@@ -13,6 +13,8 @@ import trees.AVL;
 public class AVLTest {
 
     private AVL avltree;
+    private PrintStream oldOut;
+    private ByteArrayOutputStream newOut;
 
     public AVLTest() {
     }
@@ -54,6 +56,31 @@ public class AVLTest {
     @After
     public void tearDown() {
     }
+    
+    
+    /**
+     * Apumetodi, joka uudelleenohjaa System.outin uuteen PrintStreamiin.
+     */
+    public void redirectSystemOut() {
+
+        newOut = new ByteArrayOutputStream();
+
+        // Vanha System.out talteen
+        oldOut = System.out;
+
+        // Uudelleenohjataan System.out uuteen PrintStreamiin
+        System.setOut(new PrintStream(newOut));
+    }
+
+    /**
+     * Apumetodi, joka asettaa System.outin takaisin vanhaan System.outiin.
+     */
+    public void setSystemOutBack() {
+
+        // Vanha System.out takaisin
+        System.setOut(oldOut);
+    }
+
 
     @Test
     public void doesGetRootWork() {
@@ -230,24 +257,10 @@ public class AVLTest {
         tree.AVLdelete(-4);
 
         String lvl = "14 9 18 8 11 16 233 10 13 15 17 234 ";
-
-        ByteArrayOutputStream newOut = new ByteArrayOutputStream();
-
-        // Vanha System.out talteen
-        PrintStream oldStream = System.out;
-
-        // Uudelleenohjataan System.out uuteen PrintStreamiin
-        System.setOut(new PrintStream(newOut));
-
-        // Tulostetaan solmut
-        tree.printLevelOrder(tree.getRoot());
-
-        // Vanha System.out takaisin
-        System.setOut(oldStream);
-
-        // Kirjoitetaan streamattu teskti Stringiin
+        redirectSystemOut();
+        avltree.printLevelOrder(avltree.getRoot());
+        setSystemOutBack();
         String testResult = new String(newOut.toByteArray());
-
         assertEquals(lvl, testResult);
     }
     
@@ -257,23 +270,10 @@ public class AVLTest {
         String lvl = "14 4 22 2 11 16 1000 -4"
                 + " 3 9 13 15 18 234 1002 8 10 17 233 1003 ";
         
-        ByteArrayOutputStream newOut = new ByteArrayOutputStream();
-
-        // Vanha System.out talteen
-        PrintStream oldStream = System.out;
-
-        // Uudelleenohjataan System.out uuteen PrintStreamiin
-        System.setOut(new PrintStream(newOut));
-
-        // Tulostetaan solmut
+        redirectSystemOut();
         avltree.printLevelOrder(avltree.getRoot());
-
-        // Vanha System.out takaisin
-        System.setOut(oldStream);
-
-        // Kirjoitetaan streamattu teksti Stringiin
+        setSystemOutBack();
         String testResult = new String(newOut.toByteArray());
-
         assertEquals(lvl, testResult);
-    }
+    }  
 }

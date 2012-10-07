@@ -61,7 +61,8 @@ public class Main {
         b.delete(15);
         b.delete(10);
         System.out.println(b.search(10)); // false toimii
-       
+      
+      * */
         System.out.println("PUU VAIHTUUUUU");
         
         
@@ -78,8 +79,7 @@ public class Main {
         a.AVLinsert(15);
         a.AVLinsert(14);
         
-        * 
-        */
+        
         //
         //            4
         //           / \
@@ -90,7 +90,7 @@ public class Main {
         //            5   14  16
         //
        
-        /*
+        
         a.printPreOrder(a.getRoot()); // 4 2 1 3 7 6 5 15 14 16 toimii
         System.out.println("");
         a.printLevelOrder(a.getRoot()); // 4 2 7 1 3 6 15 5 14 16 toimii
@@ -111,7 +111,8 @@ public class Main {
         
         // Poisto:
         a.AVLdelete(22);
-        a.AVLdelete(2);
+        a.AVLdelete(7);
+        
         
         // Ei enää löydy:
         System.out.println(a.search(7)); // false toimii
@@ -142,7 +143,7 @@ public class Main {
         System.out.println("");
         lol.printLevelOrder(lol.getRoot());
         
-        
+        /*
         
         Binary_Search bintree = new Binary_Search();
         bintree = new Binary_Search();
@@ -309,7 +310,7 @@ public class Main {
         s.printLevelOrder(s.getRoot());
         System.out.println("");
         
-        /*
+        
         
         // oho, toimii
         Trie c = new Trie();
@@ -385,8 +386,7 @@ public class Main {
         System.out.println(c.trieSearch(-655));
       
         
-        * 
-        */
+        
         
     }
 

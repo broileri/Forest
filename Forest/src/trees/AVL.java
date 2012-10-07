@@ -68,16 +68,14 @@ public class AVL extends Walks {
                 balanceRightsGrandchild(p);
                 return;
             }
-            // Asetetaan p:lle uusi pituus ja jatketaan ylös juurta päin         
-            p.setHeight(higher(countHeight(p.getLeft()), countHeight(p.getRight())) + 1);
+            // Jatketaan ylös juurta päin  
             p = p.getParent();
         }
     }
 
     /**
      * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää
-     * p:n vanhemman lapsen ja korkeuden sen jälkeen, kun p:ssä ollut
-     * epätasapaino on korjattu.
+     * p:n vanhemman lapsen sen jälkeen, kun p:ssä ollutepätasapaino on korjattu.
      *
      * @see trees.AVL#AVLinsert(int key)
      * @see trees.AVL#balanceLeftsGrandchild(data_structures.Node)
@@ -97,10 +95,6 @@ public class AVL extends Walks {
             parent.setLeft(subtree);
         } else {
             parent.setRight(subtree);
-        }
-        // Asetetaan korkeudet oikein
-        if (parent != null) {
-            parent.setHeight(higher(countHeight(parent.getLeft()), countHeight(parent.getRight())) + 1);
         }
     }
 
@@ -198,9 +192,8 @@ public class AVL extends Walks {
                 else if (countHeight(p.getRight()) == countHeight(p.getLeft()) + 2) {
                     balanceRightsGrandchild(p);
 
-                } // Tasapaino kunnossa, päivitetään solmun pituus ja jatketaan juurta päin
+                } // Tasapaino kunnossa, jatketaan juurta päin
                 else {
-                    p.setHeight(higher(countHeight(p.getLeft()), countHeight(p.getRight())) + 1);
                     p = p.getParent();
                 }
             }
@@ -371,8 +364,7 @@ public class AVL extends Walks {
 
     /**
      * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka kiertää
-     * puusolmuja oikealle tasapainon säilyttämiseksi ja asettaa paikkaansa
-     * vaihtaneiden solmujen korkeudet oikeanlaisiksi.
+     * puusolmuja oikealle tasapainon säilyttämiseksi.
      *
      * @see trees.AVL#AVLdelete(int)
      * @see trees.AVL#AVLinsert(int)
@@ -390,16 +382,12 @@ public class AVL extends Walks {
         if (x.getLeft() != null) {
             x.getLeft().setParent(x);
         }
-        // Asetetaan korkeudet oikein
-        x.setHeight(higher(countHeight(x.getLeft()), countHeight(x.getRight())) + 1);
-        y.setHeight(higher(countHeight(y.getLeft()), countHeight(y.getRight())) + 1);
         return y;
     }
 
     /**
      * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka kiertää
-     * puusolmuja vasemmalle tasapainon säilyttämiseksi ja asettaa paikkaansa
-     * vaihtaneiden solmujen korkeudet oikeanlaisiksi.
+     * puusolmuja vasemmalle tasapainon säilyttämiseksi.
      *
      * @see trees.AVL#AVLdelete(int)
      * @see trees.AVL#AVLinsert(int)
@@ -417,9 +405,6 @@ public class AVL extends Walks {
         if (x.getRight() != null) {
             x.getRight().setParent(x);
         }
-        // Asetetaan korkeudet oikein
-        x.setHeight(higher(countHeight(x.getLeft()), countHeight(x.getRight())) + 1);
-        y.setHeight(higher(countHeight(y.getLeft()), countHeight(y.getRight())) + 1);
         return y;
     }
 
