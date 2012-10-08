@@ -106,8 +106,8 @@ public class AVL extends Walks {
      * @param key Puuhun lisättävän alkion avain.
      * @return Viite puuhun juuri lisättyyn solmuun, tai null, jos key on jo puussa.
      */
-    public Node insert(int key) {
-     
+    private Node insert(int key) {
+
         Node insertThis = new Node(key);
         
         // Koska uusi solmu tulee puun lehdeksi, se saa korkeudeksi 0

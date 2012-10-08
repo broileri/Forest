@@ -1,6 +1,6 @@
 package trees;
 
-
+import data_structures.Node;
 import java.util.Random;
 import trees.AVL;
 import trees.Binary_Search;
@@ -13,10 +13,10 @@ import trees.Trie;
  * @author Broileri
  */
 public class Main {
-
+    
     public static void main(String[] args) {
 
-
+        
         /**
          * Alkuasetukset
          */
@@ -42,19 +42,19 @@ public class Main {
                 
 
         for (int i = 0; i < 10000; i++) {
-            small[i] = r.nextInt(2000000) - 1000000;
-            findTheseS[i] = r.nextInt(2000000) - 1000000;
-            delTheseS[i] = r.nextInt(2000000) - 1000000;
+            small[i] = r.nextInt(20000000) - 10000000;
+            findTheseS[i] = r.nextInt(20000000) - 10000000;
+            delTheseS[i] = r.nextInt(20000000) - 10000000;
         }
         for (int i = 0; i < 100000; i++) {
-            medium[i] = r.nextInt(2000000) - 1000000;
-            findTheseM[i] = r.nextInt(2000000) - 1000000;
-            delTheseM[i] = r.nextInt(2000000) - 1000000;
+            medium[i] = r.nextInt(20000000) - 10000000;
+            findTheseM[i] = r.nextInt(20000000) - 10000000;
+            delTheseM[i] = r.nextInt(20000000) - 10000000;
         }
         for (int i = 0; i < 1000000; i++) {
-            large[i] = r.nextInt(2000000) - 1000000;
-            findTheseL[i] = r.nextInt(2000000) - 1000000;
-            delTheseL[i] = r.nextInt(2000000) - 1000000;
+            large[i] = r.nextInt(20000000) - 10000000;
+            findTheseL[i] = r.nextInt(20000000) - 10000000;
+            delTheseL[i] = r.nextInt(20000000) - 10000000;
         }
         
         
@@ -77,8 +77,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            b.insert(addThis);
+            b.insert(medium[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Binary search, insert 100 000 times: " + (end - start) + " ms.");
@@ -87,8 +86,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 1000000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            b.insert(addThis);
+            b.insert(large[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Binary search, insert 1 000 000 times: " + (end - start) + " ms.");
@@ -109,8 +107,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            a.AVLinsert(addThis);
+            a.AVLinsert(medium[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("AVL, insert 100 000 times: " + (end - start) + " ms.");
@@ -119,8 +116,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 1000000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            a.AVLinsert(addThis);
+            a.AVLinsert(large[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("AVL, insert 1 000 000 times: " + (end - start) + " ms.");
@@ -141,8 +137,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            s.splayInsert(addThis);
+            s.splayInsert(medium[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Splay, insert 100 000 times: " + (end - start) + " ms.");
@@ -151,8 +146,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 1000000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            s.splayInsert(addThis);
+            s.splayInsert(large[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Splay, insert 1 000 000 times: " + (end - start) + " ms.");
@@ -173,8 +167,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            t.insert(addThis);
+            t.insert(medium[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Trie, insert 100 000 times: " + (end - start) + " ms.");
@@ -183,8 +176,7 @@ public class Main {
         start = System.currentTimeMillis();
 
         for (int i = 0; i < 1000000; i++) {
-            addThis = r.nextInt(20000) - 10000;
-            t.insert(addThis);
+            t.insert(large[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Trie, insert 1 000 000 times: " + (end - start) + " ms.");
@@ -342,7 +334,7 @@ public class Main {
         /**
          * 
          */
-        System.out.println("\n\n\nDELETES FROM TREES WITH 1 000 000 INSERTS");
+        System.out.println("\n\n\nDELETES FROM TREES WITH ~1 000 000 NODES");
         Binary_Search b2 = b;
         AVL a2 = a;
         Splay s2 = s;
@@ -450,6 +442,6 @@ public class Main {
             t2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
-        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");       
+        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");     
     }
 }
