@@ -45,27 +45,23 @@ public class Binary_Search extends Walks {
             Node current = this.root;
 
             while (true) {
-                // Lisättävä pienempi tai yhtä suuri --> vasemmalle
-                if (key <= current.getKey()) {
 
-                    // Jos vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
+                if (key == current.getKey()) {
+                    return; // Lisättävä on jo puussa - ei tehdä uutta lisäystä, palataan!
+                }
+                if (key < current.getKey()) { // Lisättävä pienempi tai yhtä suuri --> vasemmalle                    
                     if (current.getLeft() != null) {
-                        current = current.getLeft();
-                    } // Jos vasen lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle 
-                    else {
-                        current.setLeft(new Node(key));
+                        current = current.getLeft(); // Vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
+                    } else {
+                        current.setLeft(new Node(key)); // Vasen lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle 
                         current.getLeft().setParent(current);
                         return;
                     }
-                } // Lisättävä suurempi --> oikealle
-                else {
-
-                    // Jos oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
+                } else { // Lisättävä suurempi --> oikealle
                     if (current.getRight() != null) {
-                        current = current.getRight();
-                    } // Jos oikea lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle
-                    else {
-                        current.setRight(new Node(key));
+                        current = current.getRight(); // Oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
+                    } else {
+                        current.setRight(new Node(key)); // Oikea lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle
                         current.getRight().setParent(current);
                         return;
                     }
@@ -117,7 +113,6 @@ public class Binary_Search extends Walks {
                 caseNoChildren(found); // Poistettavalla ei lapsia                    
             } else if (found.getLeft() == null || found.getRight() == null) {
                 caseOneChild(found);  // Poistettavalla yksi lapsi
-
             } else {
                 caseTwoChildren(found); // Poistettavalla kaksi lasta
             }

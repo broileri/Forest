@@ -41,6 +41,7 @@ public class BinaryTest {
         bintree.insert(-4);        //                            \
         bintree.insert(17);        //                           1000 
         bintree.insert(1000);
+        bintree.insert(1000);
     }
 
     @After

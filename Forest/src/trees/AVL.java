@@ -40,6 +40,7 @@ public class AVL extends Walks {
         this.root = root;
     }
 
+
     /**
      * AVLinsert lisää insertin avulla puuhun solmun, jolla on parametrina
      * annettu avain. Sen jälkeen metodi tasapainottaa puun apumetodien avulla.
@@ -50,28 +51,104 @@ public class AVL extends Walks {
      * @see trees.AVL#balanceRightsGrandchild(data_structures.Node)
      *
      * @param key Puuhun lisättävän solmun avain.
-     */
+     */    
     public void AVLinsert(int key) {
-
+        
+        
         // Viedään uusi arvo puuhun
-        Node newNode = insert(key), p = newNode.getParent();
+        Node newNode = insert(key);
+        if (newNode == null) {
+            return;
+        }
+        Node p = newNode.getParent();
 
         while (p != null) {
 
+            int lChildHeight = -1, rChildHeight = -1;
+            
+            if (p.getLeft() != null) {
+                lChildHeight = p.getLeft().getHeight();
+            }
+            if (p.getRight() != null) {
+                rChildHeight = p.getRight().getHeight();
+            }
+            
             // Jos vasen lapsi aiheuttaa epätasapainon...
-            if (countHeight(p.getLeft()) == countHeight(p.getRight()) + 2) {
+            if (lChildHeight == rChildHeight + 2) {
                 balanceLeftsGrandchild(p);
                 return;
             }
             // Jos oikea lapsi aiheuttaa epätasapainon...
-            if (countHeight(p.getRight()) == countHeight(p.getLeft()) + 2) {
+            if (rChildHeight == lChildHeight + 2) {
                 balanceRightsGrandchild(p);
                 return;
             }
-            // Jatketaan ylös juurta päin  
+            // Korjataan p:n korkeus ja jatketaan ylös juurta päin            
+            lChildHeight = -1;
+            rChildHeight = -1;
+            if (p.getLeft() != null) {
+                lChildHeight = p.getLeft().getHeight();
+            }
+            if (p.getRight() != null) {
+                rChildHeight = p.getRight().getHeight();
+            }
+            p.setHeight(higher(lChildHeight, rChildHeight) + 1);
             p = p.getParent();
         }
     }
+    
+        /**
+     * AVLinsertin käyttämä apumetodi, joka hoitaa varsinaisen
+     * solmunlisäysoperaation.
+     *
+     * @see trees.AVL#AVLinsert(int key)
+     * @see data_structures.Node
+     * @param key Puuhun lisättävän alkion avain.
+     * @return Viite puuhun juuri lisättyyn solmuun, tai null, jos key on jo puussa.
+     */
+    public Node insert(int key) {
+     
+        Node insertThis = new Node(key);
+        
+        // Koska uusi solmu tulee puun lehdeksi, se saa korkeudeksi 0
+        insertThis.setHeight(0);
+        
+        // Tyhjä puu, uusi solmu laitetaan juureksi
+        if (this.getRoot() == null) {
+            this.setRoot(insertThis);            
+            return insertThis;
+        }           
+        // Haetaan uuden lisättävälle solmulle vanhempi
+        Node current = this.getRoot(), insertsParent = null;
+        while (current != null) {
+            insertsParent = current;
+            if (current.getKey() == key) {
+                return null; // Key on jo puussa - palautetaan tyhjä!
+            }
+            if (key < current.getKey()) {
+                current = current.getLeft();
+            }
+            else {
+                current = current.getRight();
+            }  
+        }
+        insertThis.setParent(insertsParent);
+        
+        // Asetataan lisättävä solmu vanhemman oikeaksi tai vasemmaksi lapseksi ja päivitetään vanhemman korkeus
+        if (key < insertsParent.getKey()) {
+            insertsParent.setLeft(insertThis);
+            if (insertsParent.getRight() == null) {
+                insertsParent.setHeight(1);                
+            }
+        }
+        else {
+            insertsParent.setRight(insertThis);
+            if (insertsParent.getLeft() == null) {
+                insertsParent.setHeight(1);                 
+            }
+        }        
+        return insertThis;        
+    }   
 
     /**
      * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää
@@ -96,6 +173,11 @@ public class AVL extends Walks {
         } else {
             parent.setRight(subtree);
         }
+        // Asetetaan korkeudet oikein
+        if (parent != null) {
+            parent.setHeight(higher(countHeight(parent.getLeft()), countHeight(parent.getRight())) + 1);
+        }
+        
     }
 
     /**
@@ -113,55 +195,6 @@ public class AVL extends Walks {
         int leftHeight = countHeight(x.getLeft());
         int rightHeight = countHeight(x.getRight());
         return (higher(leftHeight, rightHeight) + 1);
-    }
-
-    /**
-     * AVLinsertin käyttämä apumetodi, joka hoitaa varsinaisen
-     * solmunlisäysoperaation.
-     *
-     * @see trees.AVL#AVLinsert(int key)
-     * @see data_structures.Node
-     * @param key Puuhun lisättävän alkion avain.
-     * @return Viite puuhun juuri lisättyyn solmuun.
-     */
-    private Node insert(int key) {
-
-        Node newNode = new Node(key);
-
-        // Jos tyhjä puu, luodaan juurisolmu
-        if (this.root == null) {
-            this.root = newNode;
-            return newNode;
-        } else {
-            Node current = this.root;
-            while (true) {
-                // Lisättävä pienempi tai yhtä suuri --> vasemmalle
-                if (key <= current.getKey()) {
-
-                    // Jos vasen lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                    if (current.getLeft() != null) {
-                        current = current.getLeft();
-                    } // Jos vasen lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle 
-                    else {
-                        current.setLeft(newNode);
-                        current.getLeft().setParent(current);
-                        return newNode;
-                    }
-                } // Lisättävä suurempi --> oikealle
-                else {
-
-                    // Jos oikea lapsi ei ole tyhjä, siirrytään puussa alaspäin
-                    if (current.getRight() != null) {
-                        current = current.getRight();
-                    } // Jos oikea lapsi on tyhjä, tallennetaan uusi arvo sen kohdalle
-                    else {
-                        current.setRight(newNode);
-                        current.getRight().setParent(current);
-                        return newNode;
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -194,6 +227,7 @@ public class AVL extends Walks {
 
                 } // Tasapaino kunnossa, jatketaan juurta päin
                 else {
+                    p.setHeight(higher(countHeight(p.getLeft()), countHeight(p.getRight())) + 1);
                     p = p.getParent();
                 }
             }
@@ -382,6 +416,9 @@ public class AVL extends Walks {
         if (x.getLeft() != null) {
             x.getLeft().setParent(x);
         }
+          // Asetetaan korkeudet oikein
+        x.setHeight(higher(countHeight(x.getLeft()), countHeight(x.getRight())) + 1);
+        y.setHeight(higher(countHeight(y.getLeft()), countHeight(y.getRight())) + 1);
         return y;
     }
 
@@ -405,6 +442,9 @@ public class AVL extends Walks {
         if (x.getRight() != null) {
             x.getRight().setParent(x);
         }
+        // Asetetaan korkeudet oikein
+        x.setHeight(higher(countHeight(x.getLeft()), countHeight(x.getRight())) + 1);
+        y.setHeight(higher(countHeight(y.getLeft()), countHeight(y.getRight())) + 1);
         return y;
     }
 
