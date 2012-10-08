@@ -217,17 +217,27 @@ public class AVL extends Walks {
             Node p = deleted.getParent();
 
             while (p != null) {
+                
+            int lChildHeight = -1, rChildHeight = -1;
+            
+            if (p.getLeft() != null) {
+                lChildHeight = p.getLeft().getHeight();
+            }
+            if (p.getRight() != null) {
+                rChildHeight = p.getRight().getHeight();
+            }
+                
                 // Jos vasen lapsi aiheuttaa epätasapainon...
-                if (countHeight(p.getLeft()) == countHeight(p.getRight()) + 2) {
+                if (lChildHeight == rChildHeight + 2) {
                     balanceLeftsGrandchild(p);
 
                 } // Jos oikea lapsi aiheuttaa epätasapainon?
-                else if (countHeight(p.getRight()) == countHeight(p.getLeft()) + 2) {
+                else if (rChildHeight == lChildHeight + 2) {
                     balanceRightsGrandchild(p);
 
                 } // Tasapaino kunnossa, jatketaan juurta päin
                 else {
-                    p.setHeight(higher(countHeight(p.getLeft()), countHeight(p.getRight())) + 1);
+                    p.setHeight(higher(lChildHeight, rChildHeight) + 1);
                     p = p.getParent();
                 }
             }
@@ -330,10 +340,10 @@ public class AVL extends Walks {
             return deleteThis;
         }
         if (deleteThis == parent.getLeft()) {
-            parent.setLeft(null);
+            parent.setLeft(null);            
         } else {
-            parent.setRight(null);
-        }
+            parent.setRight(null);            
+        }       
         return deleteThis;
     }
 

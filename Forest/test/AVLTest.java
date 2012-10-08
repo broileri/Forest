@@ -275,5 +275,5 @@ public class AVLTest {
         setSystemOutBack();
         String testResult = new String(newOut.toByteArray());
         assertEquals(lvl, testResult);
-    }  
+    }   
 }

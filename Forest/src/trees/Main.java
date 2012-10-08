@@ -1,3 +1,5 @@
+package trees;
+
 
 import java.util.Random;
 import trees.AVL;
@@ -448,6 +450,6 @@ public class Main {
             t2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
-        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");
+        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");       
     }
 }
