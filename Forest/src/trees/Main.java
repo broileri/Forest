@@ -442,6 +442,53 @@ public class Main {
             t2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
-        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");     
-    }
+        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms."); 
+        
+        /**
+         * Läpikäynnit
+         */
+        b = new Binary_Search();
+        a = new AVL();
+        s = new Splay();
+        t = new Trie();
+        
+        
+        System.out.println("\n\n\nTREE TRAVERSALS when inserts are ");
+        
+        for (int i = 0; i < 20; i++) {
+            int k = r.nextInt(50);
+            b.insert(k);
+            a.AVLinsert(k);
+            s.splayInsert(k);
+            t.insert(k);
+            System.out.print(k + " ");
+        }
+        
+        System.out.println("\n\nBinary search, inorder:");
+        b.printInOrder(b.getRoot());
+        System.out.println("\nBinary search, preorder:");
+        b.printPreOrder(b.getRoot());
+        System.out.println("\nBinary search, postorder:");
+        b.printPostOrder(b.getRoot());
+        System.out.println("\nBinary search, level-order:");
+        b.printLevelOrder(b.getRoot());
+               
+        System.out.println("\n\nAVL, inorder:");
+        a.printInOrder(a.getRoot());
+        System.out.println("\nAVL, preorder:");
+        a.printPreOrder(a.getRoot());
+        System.out.println("\nAVL, postorder:");
+        a.printPostOrder(a.getRoot());
+        System.out.println("\nAVL, level-order:");
+        a.printLevelOrder(a.getRoot());
+        
+        System.out.println("\n\nSplay, inorder:");
+        s.printInOrder(s.getRoot());
+        System.out.println("\nSplay, preorder:");
+        s.printPreOrder(s.getRoot());
+        System.out.println("\nSplay, postorder:");
+        s.printPostOrder(s.getRoot());
+        System.out.println("\nSplay, level-order:");
+        s.printLevelOrder(s.getRoot());
+    }    
 }
