@@ -1,6 +1,5 @@
-package trees;
+package run;
 
-import data_structures.Node;
 import java.util.Random;
 import trees.AVL;
 import trees.Binary_Search;
@@ -8,22 +7,21 @@ import trees.Splay;
 import trees.Trie;
 
 /**
- * Pääluokka, jossa puiden aikatestausta.
+ * Puiden aikatestausta ja esitys läpikäynneistä binäärihakupuulle, AVL-puulle
+ * ja trie-puulle.
  *
  * @author Broileri
  */
-public class Main {
-    
-    public static void main(String[] args) {
+public class Demo {
 
-        
+    public static void demo() {
+
+
         /**
          * Alkuasetukset
          */
-
         Random r = new Random();
         long start, end;
-        int addThis;
 
         Binary_Search b = new Binary_Search();
         AVL a = new AVL();
@@ -39,7 +37,7 @@ public class Main {
         int[] delTheseS = new int[10000];
         int[] delTheseM = new int[100000];
         int[] delTheseL = new int[1000000];
-                
+
 
         for (int i = 0; i < 10000; i++) {
             small[i] = r.nextInt(20000000) - 10000000;
@@ -56,11 +54,8 @@ public class Main {
             findTheseL[i] = r.nextInt(20000000) - 10000000;
             delTheseL[i] = r.nextInt(20000000) - 10000000;
         }
-        
-        
-        /**
-         * 
-         */
+
+
         System.out.println("INSERTS");
         /**
          * BINÄÄRIHAKUPUU, insert
@@ -150,7 +145,7 @@ public class Main {
         }
         end = System.currentTimeMillis();
         System.out.println("Splay, insert 1 000 000 times: " + (end - start) + " ms.");
-        
+
 
         /**
          * TRIE-PUU, insert
@@ -181,159 +176,153 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Trie, insert 1 000 000 times: " + (end - start) + " ms.");
 
-        /**
-         * 
-         */
 
         System.out.println("\n\n\nSEARCHES");
-        
+
         /**
          * BINÄÄRIHAKUPUU, haut
          */
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseS.length; i++) {
             b.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Binary search, 10 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseM.length; i++) {
             b.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Binary search, 100 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseL.length; i++) {
             b.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Binary search, 1 000 000 searches: " + (end - start) + " ms.");
-        
+
         /**
          * AVL-PUU, haut
          */
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseS.length; i++) {
             a.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("AVL, 10 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseM.length; i++) {
             a.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("AVL, 100 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseL.length; i++) {
             a.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("AVL, 1 000 000 searches: " + (end - start) + " ms.");
-        
+
         /**
          * SPLAY-PUU, haut
          */
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseS.length; i++) {
             s.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Splay, 10 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseM.length; i++) {
             s.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Splay, 100 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseL.length; i++) {
             s.search(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Splay, 1 000 000 searches: " + (end - start) + " ms.");
-        
+
         /**
          * TRIE-PUU, haut
          */
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseS.length; i++) {
             t.trieSearch(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Trie, 10 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseM.length; i++) {
             t.trieSearch(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Trie, 100 000 searches: " + (end - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
-        
+
         for (int i = 0; i < findTheseL.length; i++) {
             t.trieSearch(i);
-        }        
+        }
         end = System.currentTimeMillis();
         System.out.println("Trie, 1 000 000 searches: " + (end - start) + " ms.");
-        
-        /**
-         * 
-         */
+
+
         System.out.println("\n\n\nMIN & MAX");
         /**
          * BINÄÄRIHAKUPUU, min ja max
          */
         start = System.currentTimeMillis();
-        
+
         System.out.println("(" + b.getMinKey() + " & " + b.getMaxKey() + ")");
-        
+
         end = System.currentTimeMillis();
         System.out.println("Binary search, min & max: " + (end - start) + " ms.");
-        
+
         /**
          * AVL-PUU, min ja max
          */
         start = System.currentTimeMillis();
-        
+
         a.getMinKey();
         a.getMaxKey();
-        
+
         end = System.currentTimeMillis();
         System.out.println("AVL, min & max: " + (end - start) + " ms.");
-        
+
         /**
          * SPLAY-PUU, min ja max
          */
         start = System.currentTimeMillis();
-        
+
         s.getMinKey();
         s.getMaxKey();
-        
+
         end = System.currentTimeMillis();
         System.out.println("Splay, min & max: " + (end - start) + " ms.");
-                
-        /**
-         * 
-         */
+
+
+
         System.out.println("\n\n\nDELETES FROM TREES WITH ~1 000 000 NODES");
         Binary_Search b2 = b;
         AVL a2 = a;
@@ -349,7 +338,7 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Binary search, 10 000 deletes: " + (end - start) + " ms.");
         b2 = b;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             b2.delete(delTheseM[i]);
@@ -357,15 +346,15 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Binary search, 100 000 deletes: " + (end - start) + " ms.");
         b2 = b;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
             b2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Binary search, 1 000 000 deletes: " + (end - start) + " ms.");
-        
-        
+
+
         /**
          * AVL-PUU, poistot
          */
@@ -376,7 +365,7 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("AVL, 10 000 deletes: " + (end - start) + " ms.");
         a2 = a;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             a2.AVLdelete(delTheseM[i]);
@@ -384,14 +373,14 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("AVL, 100 000 deletes: " + (end - start) + " ms.");
         a2 = a;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
             a2.AVLdelete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("AVL, 1 000 000 deletes: " + (end - start) + " ms.");
-        
+
         /**
          * SPLAY-PUU, poistot
          */
@@ -402,7 +391,7 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Splay, 10 000 deletes: " + (end - start) + " ms.");
         s2 = s;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             s2.delete(delTheseM[i]);
@@ -410,14 +399,14 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Splay, 100 000 deletes: " + (end - start) + " ms.");
         s2 = s;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
             s2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
         System.out.println("Splay, 1 000 000 deletes: " + (end - start) + " ms.");
-        
+
         /**
          * TRIE-PUU, poistot
          */
@@ -428,7 +417,7 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Trie, 10 000 deletes: " + (end - start) + " ms.");
         t2 = t;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             t2.delete(delTheseM[i]);
@@ -436,14 +425,14 @@ public class Main {
         end = System.currentTimeMillis();
         System.out.println("Trie, 100 000 deletes: " + (end - start) + " ms.");
         t2 = t;
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
             t2.delete(delTheseL[i]);
         }
         end = System.currentTimeMillis();
-        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms."); 
-        
+        System.out.println("Trie, 1 000 000 deletes: " + (end - start) + " ms.");
+
         /**
          * Läpikäynnit
          */
@@ -451,10 +440,10 @@ public class Main {
         a = new AVL();
         s = new Splay();
         t = new Trie();
-        
-        
+
+
         System.out.println("\n\n\nTREE TRAVERSALS when inserts are ");
-        
+
         for (int i = 0; i < 20; i++) {
             int k = r.nextInt(50);
             b.insert(k);
@@ -463,7 +452,7 @@ public class Main {
             t.insert(k);
             System.out.print(k + " ");
         }
-        
+
         System.out.println("\n\nBinary search, inorder:");
         b.printInOrder(b.getRoot());
         System.out.println("\nBinary search, preorder:");
@@ -472,7 +461,7 @@ public class Main {
         b.printPostOrder(b.getRoot());
         System.out.println("\nBinary search, level-order:");
         b.printLevelOrder(b.getRoot());
-               
+
         System.out.println("\n\nAVL, inorder:");
         a.printInOrder(a.getRoot());
         System.out.println("\nAVL, preorder:");
@@ -481,7 +470,7 @@ public class Main {
         a.printPostOrder(a.getRoot());
         System.out.println("\nAVL, level-order:");
         a.printLevelOrder(a.getRoot());
-        
+
         System.out.println("\n\nSplay, inorder:");
         s.printInOrder(s.getRoot());
         System.out.println("\nSplay, preorder:");
@@ -490,5 +479,6 @@ public class Main {
         s.printPostOrder(s.getRoot());
         System.out.println("\nSplay, level-order:");
         s.printLevelOrder(s.getRoot());
-    }    
+        System.out.println("\n");
+    }
 }
