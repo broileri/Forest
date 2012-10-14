@@ -114,10 +114,8 @@ public class Trie {
                 return null;
             }
             // Jos ollaan päästy haettavan luvun viimeiseen osaan ja solmussa on tosi endsHere-arvo, key on puussa!
-            if (i == number.length - 1) {
-                if (list[place].getEnd()) {
-                    return list;
-                }
+            if (i == number.length - 1 && list[place].getEnd()) {                
+                    return list;                
             }
             list = list[place].getList();
         }

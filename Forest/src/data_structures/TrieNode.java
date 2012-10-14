@@ -13,7 +13,7 @@ public class TrieNode {
     private int key;
 
     /**
-     * Juurisolmulla on kaksisolmulistaa; yksi negatiivisille arvoille ja toinen
+     * Juurisolmulla on kaksi solmulistaa; yksi negatiivisille arvoille ja toinen
      * positiivisille arvoille.
      */
     public TrieNode() {

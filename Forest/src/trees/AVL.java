@@ -7,7 +7,6 @@ import data_structures.Walks;
  * AVL-puu.
  *
  * @see data_structures.Walks
- *
  * @author Broileri
  */
 public class AVL extends Walks {
@@ -34,12 +33,11 @@ public class AVL extends Walks {
     /**
      * Asettaa puulle juurisolmun.
      *
-     * @see data_structures.Node     
+     * @see data_structures.Node
      */
     private void setRoot(Node root) {
         this.root = root;
     }
-
 
     /**
      * AVLinsert lisää insertin avulla puuhun solmun, jolla on parametrina
@@ -51,10 +49,10 @@ public class AVL extends Walks {
      * @see trees.AVL#balanceRightsGrandchild(data_structures.Node)
      *
      * @param key Puuhun lisättävän solmun avain.
-     */    
+     */
     public void AVLinsert(int key) {
-        
-        
+
+
         // Viedään uusi arvo puuhun
         Node newNode = insert(key);
         if (newNode == null) {
@@ -65,20 +63,20 @@ public class AVL extends Walks {
         while (p != null) {
 
             int lChildHeight = -1, rChildHeight = -1;
-            
+
             if (p.getLeft() != null) {
                 lChildHeight = p.getLeft().getHeight();
             }
             if (p.getRight() != null) {
                 rChildHeight = p.getRight().getHeight();
             }
-            
-            // Jos vasen lapsi aiheuttaa epätasapainon...
+
+            // Jos vasen lapsi aiheuttaa epätasapainon
             if (lChildHeight == rChildHeight + 2) {
                 balanceLeftsGrandchild(p);
                 return;
             }
-            // Jos oikea lapsi aiheuttaa epätasapainon...
+            // Jos oikea lapsi aiheuttaa epätasapainon
             if (rChildHeight == lChildHeight + 2) {
                 balanceRightsGrandchild(p);
                 return;
@@ -96,28 +94,29 @@ public class AVL extends Walks {
             p = p.getParent();
         }
     }
-    
-        /**
+
+    /**
      * AVLinsertin käyttämä apumetodi, joka hoitaa varsinaisen
      * solmunlisäysoperaation.
      *
      * @see trees.AVL#AVLinsert(int key)
      * @see data_structures.Node
      * @param key Puuhun lisättävän alkion avain.
-     * @return Viite puuhun juuri lisättyyn solmuun, tai null, jos key on jo puussa.
+     * @return Viite puuhun juuri lisättyyn solmuun, tai null, jos key on jo
+     * puussa.
      */
     private Node insert(int key) {
 
         Node insertThis = new Node(key);
-        
+
         // Koska uusi solmu tulee puun lehdeksi, se saa korkeudeksi 0
         insertThis.setHeight(0);
-        
+
         // Tyhjä puu, uusi solmu laitetaan juureksi
         if (this.getRoot() == null) {
-            this.setRoot(insertThis);            
+            this.setRoot(insertThis);
             return insertThis;
-        }           
+        }
         // Haetaan uuden lisättävälle solmulle vanhempi
         Node current = this.getRoot(), insertsParent = null;
         while (current != null) {
@@ -127,32 +126,31 @@ public class AVL extends Walks {
             }
             if (key < current.getKey()) {
                 current = current.getLeft();
-            }
-            else {
+            } else {
                 current = current.getRight();
-            }  
+            }
         }
         insertThis.setParent(insertsParent);
-        
+
         // Asetataan lisättävä solmu vanhemman oikeaksi tai vasemmaksi lapseksi ja päivitetään vanhemman korkeus
         if (key < insertsParent.getKey()) {
             insertsParent.setLeft(insertThis);
             if (insertsParent.getRight() == null) {
-                insertsParent.setHeight(1);                
+                insertsParent.setHeight(1);
             }
-        }
-        else {
+        } else {
             insertsParent.setRight(insertThis);
             if (insertsParent.getLeft() == null) {
-                insertsParent.setHeight(1);                 
+                insertsParent.setHeight(1);
             }
-        }        
-        return insertThis;        
-    }   
+        }
+        return insertThis;
+    }
 
     /**
      * AVLinsertin ja AVLdeleten yhteydessä käytettävä metodi, joka päivittää
-     * p:n vanhemman lapsen sen jälkeen, kun p:ssä ollutepätasapaino on korjattu.
+     * p:n vanhemman lapsen sen jälkeen, kun p:ssä ollut epätasapaino on
+     * korjattu.
      *
      * @see trees.AVL#AVLinsert(int key)
      * @see trees.AVL#balanceLeftsGrandchild(data_structures.Node)
@@ -177,7 +175,7 @@ public class AVL extends Walks {
         if (parent != null) {
             parent.setHeight(higher(countHeight(parent.getLeft()), countHeight(parent.getRight())) + 1);
         }
-        
+
     }
 
     /**
@@ -212,26 +210,24 @@ public class AVL extends Walks {
 
         Node deleted = delete(key);
 
-        // Jos poistettava oli puussa...
+        // Jos poistettava oli puussa
         if (deleted != null) {
             Node p = deleted.getParent();
 
             while (p != null) {
-                
-            int lChildHeight = -1, rChildHeight = -1;
-            
-            if (p.getLeft() != null) {
-                lChildHeight = p.getLeft().getHeight();
-            }
-            if (p.getRight() != null) {
-                rChildHeight = p.getRight().getHeight();
-            }
-                
-                // Jos vasen lapsi aiheuttaa epätasapainon...
+
+                int lChildHeight = -1, rChildHeight = -1;
+
+                if (p.getLeft() != null) {
+                    lChildHeight = p.getLeft().getHeight();
+                }
+                if (p.getRight() != null) {
+                    rChildHeight = p.getRight().getHeight();
+                }
+                // Jos vasen lapsi aiheuttaa epätasapainon
                 if (lChildHeight == rChildHeight + 2) {
                     balanceLeftsGrandchild(p);
-
-                } // Jos oikea lapsi aiheuttaa epätasapainon?
+                } // Jos oikea lapsi aiheuttaa epätasapainon
                 else if (rChildHeight == lChildHeight + 2) {
                     balanceRightsGrandchild(p);
 
@@ -298,10 +294,10 @@ public class AVL extends Walks {
      * AVLdeleten käyttämä apumetodi, joka hoitaa varsinaisen poistamisen.
      * Poistaa alkion, jolla on parametrina annettu avain.
      *
-     * @see trees.AVL#nodeSearch(data_structures.Node, int) 
-     * @see trees.AVL#caseNoChildren(data_structures.Node) 
-     * @see trees.AVL#caseOneChild(data_structures.Node) 
-     * @see trees.AVL#caseTwoChildren(data_structures.Node) 
+     * @see trees.AVL#nodeSearch(data_structures.Node, int)
+     * @see trees.AVL#caseNoChildren(data_structures.Node)
+     * @see trees.AVL#caseOneChild(data_structures.Node)
+     * @see trees.AVL#caseTwoChildren(data_structures.Node)
      * @param key Puusta poistettava avain.
      * @return Viite puusta poistettuun solmuun tai null, jos poistettavaa
      * avainta ei löytynyt puusta.
@@ -313,23 +309,23 @@ public class AVL extends Walks {
         // Onko poistettavaa puussa
         if (deleted != null) {
             if (deleted.getLeft() == null && deleted.getRight() == null) {
-                return caseNoChildren(deleted); // Poistettavalla ei lapsia                
+                return caseNoChildren(deleted);
             } else if (deleted.getLeft() == null || deleted.getRight() == null) {
-                return caseOneChild(deleted); // Poistettavalla on yksi lapsi
+                return caseOneChild(deleted);
             } else {
-                return caseTwoChildren(deleted); // Poistettavalla on kaksi lasta
+                return caseTwoChildren(deleted);
             }
-        }        
+        }
         return null; // Jos poistettavaa ei ollut puussa, palautetaan null
     }
 
     /**
      * deleten apumetodi, joka poistaa lapsettoman solmun.
-     * 
-     * @see trees.AVL#delete(int) 
+     *
+     * @see trees.AVL#delete(int)
      * @see data_structures.Node
      * @param deleteThis Poistettava solmu.
-     * @return 
+     * @return Poistettava solmu.
      */
     private Node caseNoChildren(Node deleteThis) {
 
@@ -340,20 +336,20 @@ public class AVL extends Walks {
             return deleteThis;
         }
         if (deleteThis == parent.getLeft()) {
-            parent.setLeft(null);            
+            parent.setLeft(null);
         } else {
-            parent.setRight(null);            
-        }       
+            parent.setRight(null);
+        }
         return deleteThis;
     }
 
     /**
      * deleten apumetodi, joka poistaa yksilapsisen solmun.
-     * 
-     * @see trees.AVL#delete(int) 
+     *
+     * @see trees.AVL#delete(int)
      * @see data_structures.Node
      * @param deleteThis Poistettava solmu.
-     * @return 
+     * @return Poistettava solmu.
      */
     private Node caseOneChild(Node deleteThis) {
 
@@ -381,12 +377,13 @@ public class AVL extends Walks {
 
     /**
      * deleten apumetodi, joka poistaa kaksilapsisen solmun.
-     * 
-     * @see trees.AVL#delete(int) 
+     *
+     * @see trees.AVL#delete(int)
      * @see data_structures.Node
-     * @see trees.AVL#getMin(data_structures.Node) 
+     * @see trees.AVL#getMin(data_structures.Node)
      * @param deleteThis Poistettava solmu.
-     * @return 
+     * @return Poistettavan solmun oikean alipuun se solmu, jolla on pienin
+     * avainarvo.
      */
     private Node caseTwoChildren(Node deleteThis) {
 
@@ -426,7 +423,7 @@ public class AVL extends Walks {
         if (x.getLeft() != null) {
             x.getLeft().setParent(x);
         }
-          // Asetetaan korkeudet oikein
+        // Asetetaan korkeudet oikein
         x.setHeight(higher(countHeight(x.getLeft()), countHeight(x.getRight())) + 1);
         y.setHeight(higher(countHeight(y.getLeft()), countHeight(y.getRight())) + 1);
         return y;
@@ -508,14 +505,17 @@ public class AVL extends Walks {
      */
     private Node nodeSearch(Node x, int key) {
 
-        if (x == null || x.getKey() == key) {
-            return x;
+        while (x != null) {
+            if (key == x.getKey()) {
+                return x;
+            }
+            if (key < x.getKey()) {
+                x = x.getLeft();
+            } else {
+                x = x.getRight();
+            }
         }
-        if (key < x.getKey()) {
-            return nodeSearch(x.getLeft(), key);
-        } else {
-            return nodeSearch(x.getRight(), key);
-        }
+        return null;
     }
 
     /**

@@ -12,6 +12,7 @@ public class Walks {
     /**
      * Puun alkioiden tulostaminen sisäjärjestyksessä.
      * 
+     * @see data_structures.Node
      * @param tree Puu, jonka alkiot halutaan tulostaa.
      */
     public void printInOrder(Node tree) {
@@ -26,6 +27,7 @@ public class Walks {
     /**
      * Puun alkioiden tulostaminen esijärjestyksessä.
      * 
+     * @see data_structures.Node
      * @param tree Puu, jonka alkiot halutaan tulostaa.
      */
     public void printPreOrder(Node tree) {
@@ -40,6 +42,7 @@ public class Walks {
     /**
      * Puun alkioiden tulostaminen jälkijärjestyksessä.
      * 
+     * @see data_structures.Node
      * @param tree Puu, jonka alkiot halutaan tulostaa.
      */
     public void printPostOrder(Node tree) {
@@ -55,8 +58,8 @@ public class Walks {
      * Puun alkioiden tulostaminen leveyssuuntaisessa järjestyksessä. Käyttää
      * apunaan LevelQueue-luokkaa
      * 
+     * @see data_structures.Node
      * @see data_structures.LevelQueue
-     * 
      * @param tree Puu, jonka alkiot halutaan tulostaa.
      */
     public void printLevelOrder(Node tree) {

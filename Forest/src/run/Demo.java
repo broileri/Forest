@@ -8,7 +8,7 @@ import trees.Trie;
 
 /**
  * Puiden aikatestausta ja esitys läpikäynneistä binäärihakupuulle, AVL-puulle
- * ja trie-puulle.
+ * ja splay-puulle.
  *
  * @author Broileri
  */

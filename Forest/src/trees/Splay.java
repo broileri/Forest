@@ -49,7 +49,7 @@ public class Splay extends Walks {
      * SplayInsertin käyttämä apumetodi, joka hoitaa varsinaisen
      * solmunlisäysoperaation.
      *
-     * @see trees.Splay#SplayInsert(int key)
+     * @see trees.Splay#splayInsert(int key)
      * @see data_structures.Node
      * @param key Puuhun lisättävän alkion avain.
      * @return Viite puuhun juuri lisättyyn solmuun.
@@ -111,32 +111,33 @@ public class Splay extends Walks {
      */
     private Node nodeSearch(Node x, int key) {
 
-        if (x != null) {
-            // Etsittävää arvoa ei ole puussa, palautetaan arvo, joka olisi ollut keyn parent
-            if (x.getKey() != key && x.getLeft() == null && x.getRight() == null) {
-                return x;
-            }
+        while (x != null) {
             // Löytyi! Palautetaan solmu, jolla key.
             if (x.getKey() == key) {
+                return x;
+            }
+            // Etsittävää arvoa ei ole puussa, palautetaan arvo, joka olisi ollut keyn parent
+            if (x.getLeft() == null && x.getRight() == null) {
                 return x;
             }
             // Ei löytynyt, mennään vasemmalle tai palautetaan muka-vanhempi
             if (key < x.getKey()) {
                 if (x.getLeft() != null) {
-                    return nodeSearch(x.getLeft(), key);
+                    x = x.getLeft();
                 } else {
                     return x;
                 }
                 // Ei löytynyt, mennään oikealle tai palautetaan muka-vanhempi
             } else {
                 if (x.getRight() != null) {
-                    return nodeSearch(x.getRight(), key);
+                    x = x.getRight();
                 } else {
                     return x;
                 }
             }
         }
-        return null; // Tähän kohtaan ei tässä toteutuksessa päästä koskaan
+        // Tähän kohtaan ei tässä toteutuksessa päästä koskaan, jätetty koodiin laajennusmahdollisuuksien vuoksi
+        return null; 
     }
 
     /**
@@ -441,7 +442,6 @@ public class Splay extends Walks {
      * @see data_structures.Node
      * @see trees.Splay#delete(int)
      * @param deleteThis Node, joka poistetaan.
-     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
     private void caseTwoChildren(Node deleteThis) {
 

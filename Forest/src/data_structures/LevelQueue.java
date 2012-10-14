@@ -65,7 +65,7 @@ public class LevelQueue {
 
     /**
      * Poistaa ja palauttaa LevelQueue-jonon ensimmäisen jäsenen. Jos
-     * jono on tyhjä, metodi palauttaa null;
+     * jono on tyhjä, metodi palauttaa null.
      *
      * @return LevelQueue-jonossa ensimmäisenä oleva puusolmu tai null.
      */

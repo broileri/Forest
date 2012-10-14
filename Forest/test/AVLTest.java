@@ -29,7 +29,7 @@ public class AVLTest {
 
     @Before
     public void setUp() {
-        // avltree-puun pitäisi näyttää lisäysten jälkeen tältä:
+                                      // avltree-puun pitäisi näyttää lisäysten jälkeen tältä:
         avltree = new AVL();          //
         avltree.AVLinsert(10);        //             _ 14_
         avltree.AVLinsert(4);         //            /     \
@@ -55,8 +55,7 @@ public class AVLTest {
 
     @After
     public void tearDown() {
-    }
-    
+    }    
     
     /**
      * Apumetodi, joka uudelleenohjaa System.outin uuteen PrintStreamiin.

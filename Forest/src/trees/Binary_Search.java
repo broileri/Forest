@@ -30,7 +30,7 @@ public class Binary_Search extends Walks {
     }
 
     /**
-     * insert lisää puuhun solmun, jolla on parametrina annettu avain.
+     * Lisää puuhun solmun, jolla on parametrina annettu avain.
      *
      * @see data_structures.Node
      * @param key Puuhun lisättävä avain.
@@ -79,18 +79,23 @@ public class Binary_Search extends Walks {
      * @param x Puu, josta avainta etsitään.
      * @param key Avain, jota etsitään.
      * @return Solmu, jolla on etsittävä avain tai null.
-     */
+     */    
     private Node nodeSearch(Node x, int key) {
-
-        if (x == null || x.getKey() == key) {
-            return x;
+        
+        while (x != null) {
+            if (key == x.getKey()) {
+                return x;
+            }
+            if (key < x.getKey()) {
+                x = x.getLeft();
+            }
+            else {
+                x = x.getRight();
+            }
         }
-        if (key < x.getKey()) {
-            return nodeSearch(x.getLeft(), key);
-        } else {
-            return nodeSearch(x.getRight(), key);
-        }
+        return null;        
     }
+
 
     /**
      * Poistaa puusta solmun, jolla on paremetrina annettu avain. Jos puussa ei
@@ -126,7 +131,6 @@ public class Binary_Search extends Walks {
      * @see data_structures.Node
      * @see trees.Binary_Search#delete(int)
      * @param deleteThis Node, joka poistetaan.
-     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
     private void caseNoChildren(Node deleteThis) {
 
@@ -150,7 +154,6 @@ public class Binary_Search extends Walks {
      * @see data_structures.Node
      * @see trees.Binary_Search#delete(int)
      * @param deleteThis Node, joka poistetaan.
-     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
     private void caseOneChild(Node deleteThis) {
 
@@ -182,7 +185,6 @@ public class Binary_Search extends Walks {
      * @see data_structures.Node
      * @see trees.Binary_Search#delete(int)
      * @param deleteThis Node, joka poistetaan.
-     * @return Tieto siitä, keskeytetäänkö deleten suorittaminen.
      */
     private void caseTwoChildren(Node deleteThis) {
 
